@@ -223,6 +223,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+<!--
   <Target Name="BeforeBuild">
     <Exec Condition="Exists('$(ProjectDir)packages.config')" Command="&quot;$(SolutionDir)Tools\nuget.exe&quot; install &quot;$(ProjectDir)packages.config&quot; -o &quot;$(SolutionDir)Packages&quot;" />
   </Target>
@@ -230,4 +231,5 @@
   <Target Name="AfterCompile">
     <VirtuosityMsBuildTask.WeavingTask />
   </Target>
+  -->
 </Project>

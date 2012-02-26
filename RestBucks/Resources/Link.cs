@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Linq;
 using System.Xml.Serialization;
-using RestBucks.Util;
 
 namespace RestBucks.Resources
 {
