@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Restbucks on Net - Cancel an order</title>
+    <link href="../styles/main.css" rel="stylesheet" type="text/css" />
+</head>
+<body> 
+	<h1>Cancel an order</h1>
+    <ul>
+        <li><strong>Uri:</strong> http://restbuckson.net/order/{id}</li>
+        <li><strong>Method:</strong> DELETE</li>
+        <li><strong>Preconditions:</strong> The status of the order must be unpaid. Once an order is paid it can't be canceled. </li>
+        <li>
+        <strong>Note:</strong> Once an order is canceled, you can't get the order with 
+    <a href="order-get.htm">order-get</a>. The order is permanently moved to 
+    trash/order/{id}.<br />
+    If you do a request to order/{id} you will get a 301 Status (Moved Permanently) 
+    and the proper Location in the response headers.
+        </li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,263 @@
+﻿body {
+	margin: 0 auto;
+	width: 580px;
+	font-family: Helvetica, Arial, Geneva, sans-serif;
+	font-size: 14px;
+	line-height: 1.4em;
+}
+
+body#blog {
+  width: 600px;
+}
+
+h1 {
+  margin: 40px 0 20px 10px;
+  text-align: center;
+}
+
+h2 {
+	clear: left;
+	font-weight: normal;
+	margin: 40px 0 10px 0;
+}
+
+h2 span {
+	display: block;
+	font-size: 12px;
+	color: #888;
+	padding-top: 4px;
+}
+
+a
+{
+    color: #1574AC;
+    text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a img {
+	border: 0;
+}
+
+p.intro {
+	font-size: 18px;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	line-height: 1.8em;
+	margin: 30px 10px 40px 1px;
+	float: left;
+	white-space: nowrap;
+}
+
+* html p.intro {
+	margin-bottom: 0;
+}
+
+p.intro span, p.intro em {
+	padding: 0px 6px;
+	float: left;
+	clear: left;
+}
+
+p.intro span.l1, #getting-started li strong {
+	background: #EAE9DA;
+}
+
+p.intro span.l2 {
+	background: #EDECDF;
+}
+
+p.intro em {
+	background: #EFEEE4;
+}
+
+p.notice {
+	margin-top: 20px;
+	padding: 10px;
+ 	background: #900;
+	color: #FFF;
+}
+
+p.notice a {
+  color: #FFF;
+  text-decoration: underline;
+}
+
+p.thanks, div.alt {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 12px;
+	text-align: justify;
+	margin: 20px 0;
+	background: #EFEEE4;
+	padding: 10px;
+	border: 1px solid #EAE9DA;
+}
+
+div.alt {
+	text-align: left;
+	padding: 0 10px;
+	margin: 0;
+}
+
+div.alt code {
+	background: #EAE9DA;
+	white-space: nowrap;
+	padding: 2px;
+}
+
+#menu {
+	list-style: none;
+	text-indent: 0;
+	margin: 0 auto;
+	padding: 0;
+	text-align: center;
+	font-size: 16px;
+}
+
+#menu li {
+	display: inline;
+}
+
+#menu a {
+	padding: 4px 5px;
+}
+
+#menu a:hover, #menu .focus
+{
+    background: #1574AC;
+    color: #FFF;
+    text-decoration: none;
+}
+
+p.copy {
+	text-align: center;
+	font-size: 10px;
+	margin-top: 20px;
+}
+
+#getting-started {
+	list-style: none;
+	padding: 0;
+	margin: 20px 0 0 0;
+}
+
+#getting-started li {
+	margin-bottom: 2px;
+	clear: left;
+	background: #EFEEE4;
+	padding: 12px 10px;
+	margin: 0 0 10px 0;
+}
+
+#getting-started li strong {
+	font-weight: bold;
+	width: 25px;
+	float: left;
+	height: 32px;
+	width: 40px;
+	text-align: center;
+	padding: 10px 0 0 0;
+	color: #666;
+	margin: -12px 10px 0 -10px;
+}
+
+#downloads ul {
+  list-style: none;
+}
+
+table {
+	width: 400px;
+}
+
+table th, table td {
+	text-align: center;
+}
+
+#post {
+  margin-bottom: 40px;
+}
+
+#post .meta {
+  color: #666;
+  font-size: 11px;
+  margin: 0;
+}
+
+#post .meta span {
+  color: #000;
+}
+
+code, pre {
+  font-family: Monaco, Consolas, Courier New, Monospace;
+}
+
+pre {
+  padding: 5px;
+  background: #EEE;
+}
+
+p.mainDownload {
+  background: #ffaf4b; /* old browsers */
+  background: -moz-linear-gradient(top, #ffaf4b 0%, #ff920a 100%); /* firefox */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffaf4b), color-stop(100%,#ff920a)); /* webkit */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', endColorstr='#ff920a',GradientType=0 ); /* ie */
+  border-radius: 10px;
+  border: 3px solid #ff7f04;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  margin-top: 20px;
+  clear: left;
+}
+
+p.mainDownload a {
+  display: block;
+  background: url(../images/download.png) no-repeat 100% 50%;
+  padding: 15px 10px 25px 10px;
+  color: #B00;
+  font-size: 30px;
+}
+
+p.mainDownload a span {
+  padding-bottom: 10px;
+  display: block;
+  font-size: 20px;
+  color: #600;
+}
+
+p.mainDownload:hover {
+	background: #ffc578; /* old browsers */
+	background: -moz-linear-gradient(top, #ffc578 0%, #fb9d23 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffc578), color-stop(100%,#fb9d23)); /* webkit */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffc578', endColorstr='#fb9d23',GradientType=0 ); /* ie */
+}
+
+p.mainDownload a:hover {
+	text-decoration: none;
+}
+
+p.mainDownload sub {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.subtext {
+	text-align: right;
+	font-size: 11px;
+	margin: 0;
+}
+
+.left {
+  float: left;
+}
+
+.syntaxhighlighter
+{
+    text-align: right;
+}
+
+.syntaxhighlighter td
+{
+    text-align: left;
+}

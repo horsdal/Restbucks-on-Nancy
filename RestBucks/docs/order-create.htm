@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Restbucks on Net - Create an order</title>
+    <link href="../styles/main.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<h1>Create an order</h1>
+    
+    <ul>
+        <li><strong>Uri:</strong> orders </li>
+        <li><strong>Method:</strong> POST</li>
+        <li><strong>Note:</strong> you will get in the response the "location" of the new your order.</li>
+        <li>
+            <strong>Example of HEADERS:</strong>
+            <pre>
+Content-Type: application/vnd.restbucks+xml</pre>
+        </li>
+        <li>
+            <strong>Example CONTENT</strong>
+            <pre style="overflow: auto">
+&lt;order xmlns:xsd=&quot;<a href="http://www.w3.org/2001/XMLSchema&quot;">http://www.w3.org/2001/XMLSchema&quot;</a> xmlns:xsi=&quot;<a href="http://www.w3.org/2001/XMLSchema-instance&quot;">http://www.w3.org/2001/XMLSchema-instance&quot;</a> xmlns=&quot;<a href="http://restbuckson.net&quot;">http://restbuckson.net&quot;</a>&gt;
+&#160;&#160;&#160; &lt;location&gt;inShop&lt;/location&gt;
+&#160;&#160;&#160; &lt;items&gt;
+&#160;&#160;&#160; &lt;item&gt;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;name&gt;latte&lt;/name&gt;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;quantity&gt;1&lt;/quantity&gt;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;size&gt;large&lt;/size&gt;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;milk&gt;skim&lt;/milk&gt;
+&#160;&#160;&#160; &lt;/item&gt;
+&#160;&#160;&#160; &lt;/items&gt;
+&lt;/order&gt;</pre>	
+        </li>
+        
+    </ul>  
+</body>
+</html>

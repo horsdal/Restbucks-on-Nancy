@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestBucks", "RestBucks\RestBucks.csproj", "{F7C9C622-60A1-430D-9B9D-0A6D9E5C034C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestBucks.Tests", "RestBucks.Tests\RestBucks.Tests.csproj", "{9D39AC72-1245-4980-B36A-50A9C23ACCB7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7C9C622-60A1-430D-9B9D-0A6D9E5C034C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7C9C622-60A1-430D-9B9D-0A6D9E5C034C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7C9C622-60A1-430D-9B9D-0A6D9E5C034C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7C9C622-60A1-430D-9B9D-0A6D9E5C034C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D39AC72-1245-4980-B36A-50A9C23ACCB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D39AC72-1245-4980-B36A-50A9C23ACCB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D39AC72-1245-4980-B36A-50A9C23ACCB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D39AC72-1245-4980-B36A-50A9C23ACCB7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

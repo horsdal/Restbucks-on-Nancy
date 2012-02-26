@@ -1,0 +1,8 @@
+[Bb]in
+[Oo]bj
+Tools
+Packages
+*.suo
+*.user
+*ReSharper*
+*dotCover*

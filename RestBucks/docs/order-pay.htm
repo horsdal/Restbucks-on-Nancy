@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Restbucks on Net - Pay an order</title>
+    <link href="../styles/main.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<h1>Pay an order</h1>
+    
+    <ul>
+        <li><strong>Uri:</strong> order/{id}/payment </li>
+		<li><strong>Method:</strong> POST </li>
+        <li><strong>Preconditions:</strong> The status of the order must be unpaid. You can't pay an order twice.</li>
+        <li><strong>Note:</strong> After you paying an order the barista will prepare your coffee in 45 seconds.</li>
+        <li>
+            <strong>Example payload</strong>
+            <pre style="overflow: auto">
+&lt;payment xmlns=&quot;<a href="http://restbuckson.net&quot;">http://restbuckson.net&quot;</a>&gt;
+&#160; &lt;card-number&gt;0145-12245-157487&lt;/card-number&gt;
+&#160; &lt;card-owner&gt;Carlos Garcia&lt;/card-owner&gt;
+&lt;/payment&gt;</pre>	
+        </li>
+    </ul>
+</body>
+</html>

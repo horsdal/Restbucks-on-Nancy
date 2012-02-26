@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Restbucks on Net - Get an order</title>
+    <link href="../styles/main.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <h1>
+        Get an order by id</h1>
+    <ul>
+        <li><strong>Uri:</strong> order/{id} </li>
+        <li><strong>Method:</strong> GET </li>
+        <li><strong>Example response content</strong>
+            <pre style="overflow: auto">
+&lt;order&gt;
+&#160;&#160;&#160; &lt;links&gt;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;link uri=&quot;<a href="http://localhost:13509/order/950272&quot;">http://localhost:13509/order/950272&quot;</a> rel=&quot;<a href="http://localhost:13509/docs/order-get.htm&quot;">http://localhost:13509/docs/order-get.htm&quot;</a> mediaType=&quot;application/vnd.restbucks+xml&quot;/&gt;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;link uri=&quot;<a href="http://localhost:13509/order/950272&quot;">http://localhost:13509/order/950272&quot;</a> rel=&quot;<a href="http://localhost:13509/docs/order-update.htm&quot;">http://localhost:13509/docs/order-update.htm&quot;</a> mediaType=&quot;application/vnd.restbucks+xml&quot;/&gt;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;link uri=&quot;<a href="http://localhost:13509/order/950272&quot;">http://localhost:13509/order/950272&quot;</a> rel=&quot;<a href="http://localhost:13509/docs/order-cancel.htm&quot;">http://localhost:13509/docs/order-cancel.htm&quot;</a> mediaType=&quot;application/vnd.restbucks+xml&quot;/&gt;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;link uri=&quot;<a href="http://localhost:13509/order/950272/payment&quot;">http://localhost:13509/order/950272/payment&quot;</a> rel=&quot;<a href="http://localhost:13509/docs/order-pay.htm&quot;">http://localhost:13509/docs/order-pay.htm&quot;</a> mediaType=&quot;application/vnd.restbucks+xml&quot;/&gt;
+&#160;&#160;&#160; &lt;/links&gt;
+&#160;&#160;&#160; &lt;location&gt;inShop&lt;/location&gt;
+&#160;&#160;&#160; &lt;cost&gt;7.60000&lt;/cost&gt;
+&#160;&#160;&#160; &lt;items&gt;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;item&gt;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;name&gt;Latte&lt;/name&gt;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;quantity&gt;1&lt;/quantity&gt;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;milk&gt;skim&lt;/milk&gt;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;size&gt;large&lt;/size&gt;
+&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;/item&gt;
+&#160;&#160;&#160; &lt;/items&gt;
+&#160;&#160;&#160; &lt;status&gt;unpaid&lt;/status&gt;
+&lt;/order&gt;</pre>
+        </li>
+    </ul>
+</body>
+</html>
