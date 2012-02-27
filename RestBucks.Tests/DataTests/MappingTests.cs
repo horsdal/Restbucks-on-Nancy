@@ -7,7 +7,7 @@ namespace RestBucks.Tests.DataTests
 {
     public class MappingTests
     {
-        [Test, Ignore]
+        [Test]
         public void GenerateMappings()
         {
             var mappings = Mapper.Generate();
