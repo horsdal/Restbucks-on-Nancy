@@ -6,3 +6,5 @@ Packages
 *.user
 *ReSharper*
 *dotCover*
+*ncrunch*
+*.crunchsolution.cache
