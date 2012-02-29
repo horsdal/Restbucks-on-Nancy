@@ -1,5 +1,4 @@
 using System;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Microsoft.ApplicationServer.Http;
@@ -7,6 +6,26 @@ using RestBucks.Domain.BaseClass;
 
 namespace RestBucks.Infrastructure
 {
+  using Nancy;
+
+  using HttpStatusCode = System.Net.HttpStatusCode;
+
+  public static class ResponseHelpers
+  {
+    public static Response BadRequest(this IResponseFormatter formatter, string reason = "", string content = "")
+    {
+      Response response = content;
+      response.StatusCode = Nancy.HttpStatusCode.BadRequest;
+      return response.WithHeader("ReasonPhrase", reason);
+    }
+
+    public static Response Created(this IResponseFormatter formatter, string location)
+    {
+      Response response= Nancy.HttpStatusCode.Created;
+      return response.WithHeader("Location", location);
+    }
+  }
+
   public static class Responses
   {
     public static HttpResponseMessage BadRequest(string reason = "", string content = "")

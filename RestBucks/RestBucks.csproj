@@ -80,6 +80,9 @@
     <Reference Include="Microsoft.ServiceModel.Web.jQuery">
       <HintPath>..\packages\JsonValue.0.3.0\lib\40\Microsoft.ServiceModel.Web.jQuery.dll</HintPath>
     </Reference>
+    <Reference Include="Nancy">
+      <HintPath>..\packages\Nancy.0.10.0\lib\net40\Nancy.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -223,7 +226,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-<!--
+  <!--
   <Target Name="BeforeBuild">
     <Exec Condition="Exists('$(ProjectDir)packages.config')" Command="&quot;$(SolutionDir)Tools\nuget.exe&quot; install &quot;$(ProjectDir)packages.config&quot; -o &quot;$(SolutionDir)Packages&quot;" />
   </Target>
