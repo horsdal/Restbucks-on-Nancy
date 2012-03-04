@@ -1,7 +1,6 @@
 ﻿namespace RestBucks.Tests.Resources
 {
   using System.Linq;
-  using System.Xml.Linq;
 
   using NUnit.Framework;
 
@@ -19,7 +18,7 @@
     }
 
     [Test]
-    public void ResponseContainsAllProducts()
+    public void ResponseContainsAllProducts([Values("latte", "Other")] string productName)
     {
       var app = CreateAppProxy();
       var result = app.Get("/menu/").BodyAsXml();
@@ -28,13 +27,28 @@
 
       Assert.That(
         itemsInResponse
-        .Where(element => element.Element("Name").Value == "latte")
-        .ToList(), Is.Not.Empty);
+        .Single(element => element.Element("Name").Value == "latte"),
+        Is.Not.Null);
       
       Assert.That(
         itemsInResponse
-        .Where(element => element.Element("Name").Value == "Other")
-        .ToList(), Is.Not.Empty);
+        .Single(element => element.Element("Name").Value == "Other"),
+        Is.Not.Null);
+    }
+
+    [Test]
+    public void ResponseContainsPrice()
+    {
+      var app = CreateAppProxy();
+      var result = app.Get("/menu/").BodyAsXml();
+
+      var itemsInResponse = result.Element("menu").Elements("item");
+
+      Assert.That(
+        itemsInResponse
+        .Single(element => element.Element("Name").Value == "latte")
+        .Element("Price").Value,
+        Is.EqualTo("2.5")); 
     }
   }
 }
