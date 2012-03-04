@@ -35,63 +35,50 @@ namespace RestBucks.Resources.Orders
 
     private Response HandlePost(OrderRepresentation orderRepresentation)
     {
-      Order order;
-      if (!CreateAndValidateOrder(orderRepresentation, out order)) return errorResponse;
+      var order = TryBuildOrder(orderRepresentation);
+      if (!order.IsValid())
+        return InvalidOrderResponse(order);
 
       orderRepository.MakePersistent(order);
-
       return Created(order);
     }
 
-    private bool CreateAndValidateOrder(OrderRepresentation orderRepresentation, out Order order)
+    private Order TryBuildOrder(OrderRepresentation orderRepresentation)
     {
-      if (!TryBuildOrder(orderRepresentation, out order)) return false;
-
-      if (!order.IsValid()) return InvalidOrderResponse(order);
-
-      return true;
-    }
-
-    private bool TryBuildOrder(OrderRepresentation orderRepresentation, out Order order)
-    {
-      errorResponse = null;
-
-      order = new Order { Date = DateTime.Today, Location = orderRepresentation.Location };
+      var order = new Order { Date = DateTime.Today, Location = orderRepresentation.Location };
       foreach (var requestedItem in orderRepresentation.Items)
-        if (!TryAddOrderItem(order, requestedItem)) return false;
+        if (!TryAddOrderItem(order, requestedItem)) 
+          break;
       
-      return true;
+      return order;
     }
 
     private bool TryAddOrderItem(Order order, OrderItemRepresentation requestedItem)
     {
-      Product product;
-      if (!TryFindProduct(requestedItem, out product)) return false;
+      var product = TryFindProduct(requestedItem);
+      if (product == null)
+        return false;
 
       var orderItem = new OrderItem(product, requestedItem.Quantity, product.Price, requestedItem.Preferences);
       order.AddItem(orderItem);
       return true;
     }
 
-    private bool TryFindProduct(OrderItemRepresentation requestedItem, out Product product)
+    private Product TryFindProduct(OrderItemRepresentation requestedItem)
     {
-      errorResponse = null;
-      product = productRepository.GetByName(requestedItem.Name);
+      var product = productRepository.GetByName(requestedItem.Name);
       if (product == null)
-      {
         errorResponse = Response.BadRequest(string.Format("We don't offer {0}", requestedItem.Name));
-        return false;
-      }
-      return true;
+      return product;
     }
 
-    private bool InvalidOrderResponse(Order order)
+    private Response InvalidOrderResponse(Order order)
     {
+      if (errorResponse != null)
+        return errorResponse;
+
       var content = string.Join("\n", order.GetErrorMessages());
-      {
-        errorResponse = Response.BadRequest("Invalid entities values", content);
-        return false;
-      }
+      return Response.BadRequest("Invalid entities values", content);
     }
 
     private Response Created(Order order)
