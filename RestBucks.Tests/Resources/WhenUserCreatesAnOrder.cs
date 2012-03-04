@@ -64,9 +64,13 @@ namespace RestBucks.Tests.Resources
                                   Items = {new OrderItemRepresentation {Name = "beer"}}
                                 };
 
-      var result = 
-        appProxy.Post("/orders/", with =>
-          with.Body(orderRepresentation.ToXmlString()));
+      var result =
+        appProxy.Post("/orders/",
+                      with =>
+                      {
+                        with.Header("Content-Type", "application/xml");
+                        with.Body(orderRepresentation.ToXmlString());
+                      });
 
 
       result.StatusCode.Should().Be.EqualTo(HttpStatusCode.BadRequest);
@@ -84,12 +88,17 @@ namespace RestBucks.Tests.Resources
       
       // act
       var result =
-        appProxy.Post("/orders/", with =>
-          with.Body(orderRepresentation.ToXmlString()));
+        appProxy.Post("/orders/",
+                      with =>
+                      {
+                        with.Header("Content-Type", "application/xml");
+                        with.Body(orderRepresentation.ToXmlString());
+                      });
 
       // assert
       result.StatusCode.Should().Be.EqualTo(HttpStatusCode.BadRequest);
-      result.Headers["ReasonPhrase"].Should().Be.EqualTo("Item 0: Quantity should be greater than 0.");
+      result.Headers["ReasonPhrase"].Should().Be.EqualTo("Invalid entities values");
+      result.Body.AsString().Should().Be.EqualTo("Item 0: Quantity should be greater than 0.");
     }
 
     [Test]
@@ -101,8 +110,12 @@ namespace RestBucks.Tests.Resources
                                 {Items = {new OrderItemRepresentation {Name = "latte", Quantity = 1}}};
 
       //act
-      appProxy.Post("/orders/", with =>
-                    with.Body(orderRepresentation.ToXmlString()));
+      appProxy.Post("/orders/",
+                      with =>
+                      {
+                        with.Header("Content-Type", "application/xml");
+                        with.Body(orderRepresentation.ToXmlString());
+                      });
 
       // assert
       var order = orderRepository.RetrieveAll().First();
@@ -118,8 +131,12 @@ namespace RestBucks.Tests.Resources
                                 {Items = {new OrderItemRepresentation {Name = "latte", Quantity = 1}}};
 
       //act
-      var result = appProxy.Post("/orders/", with =>
-                                 with.Body(orderRepresentation.ToXmlString()));
+      var result = appProxy.Post("/orders/",
+                                 with =>
+                                 {
+                                   with.Header("Content-Type", "application/xml");
+                                   with.Body(orderRepresentation.ToXmlString());
+                                 });
 
       var order = orderRepository.RetrieveAll().First();
       order.Date.Should().Be.EqualTo(DateTime.Today);
@@ -137,8 +154,12 @@ namespace RestBucks.Tests.Resources
                                 };
 
       //act
-      var result = appProxy.Post("/orders/", with =>
-                                 with.Body(orderRepresentation.ToXmlString()));
+      var result = appProxy.Post("/orders/",
+                                 with =>
+                                 {
+                                   with.Header("Content-Type", "application/xml");
+                                   with.Body(orderRepresentation.ToXmlString());
+                                 });
 
       var order = orderRepository.RetrieveAll().First();
       order.Location.Should().Be.EqualTo(Location.InShop);
@@ -160,8 +181,12 @@ namespace RestBucks.Tests.Resources
                                   Items = {new OrderItemRepresentation {Name = "latte", Quantity = 1}}
                                 };
       // act
-      var result = appProxy.Post("/orders/", with => 
-                                 with.Body(orderRepresentation.ToXmlString()));
+      var result = appProxy.Post("/orders/",
+                      with =>
+                      {
+                        with.Header("Content-Type", "application/xml");
+                        with.Body(orderRepresentation.ToXmlString());
+                      });
 
 
       result.StatusCode.Should().Be.EqualTo(HttpStatusCode.Created);

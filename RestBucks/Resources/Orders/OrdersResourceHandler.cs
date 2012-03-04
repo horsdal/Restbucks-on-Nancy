@@ -19,6 +19,7 @@ namespace RestBucks.Resources.Orders
     private readonly IRepository<Product> productRepository;
     private readonly IRepository<Order> orderRepository;
     private readonly IResourceLinker resourceLinker;
+    private Response errorResponse;
 
     public OrdersResourceHandler(IRepository<Product> productRepository,
                                  IRepository<Order> orderRepository,
@@ -34,46 +35,45 @@ namespace RestBucks.Resources.Orders
 
     private Response HandlePost(OrderRepresentation orderRepresentation)
     {
-      Response errorResponse;
       Order order;
-      if (!CreateAndValidateOrder(orderRepresentation, out errorResponse, out order)) return errorResponse;
+      if (!CreateAndValidateOrder(orderRepresentation, out order)) return errorResponse;
 
       orderRepository.MakePersistent(order);
 
       return Created(order);
     }
 
-    private bool CreateAndValidateOrder(OrderRepresentation orderRepresentation, out Response errorResponse, out Order order)
+    private bool CreateAndValidateOrder(OrderRepresentation orderRepresentation, out Order order)
     {
-      if (!TryBuildOrder(orderRepresentation, out errorResponse, out order)) return false;
+      if (!TryBuildOrder(orderRepresentation, out order)) return false;
 
-      if (!order.IsValid()) return InvalidOrderResponse(out errorResponse, order);
+      if (!order.IsValid()) return InvalidOrderResponse(order);
 
       return true;
     }
 
-    private bool TryBuildOrder(OrderRepresentation orderRepresentation, out Response errorResponse, out Order order)
+    private bool TryBuildOrder(OrderRepresentation orderRepresentation, out Order order)
     {
       errorResponse = null;
 
       order = new Order { Date = DateTime.Today, Location = orderRepresentation.Location };
       foreach (var requestedItem in orderRepresentation.Items)
-        if (!TryAddOrderItem(order, requestedItem, out errorResponse)) return false;
+        if (!TryAddOrderItem(order, requestedItem)) return false;
       
       return true;
     }
 
-    private bool TryAddOrderItem(Order order, OrderItemRepresentation requestedItem, out Response errorResponse)
+    private bool TryAddOrderItem(Order order, OrderItemRepresentation requestedItem)
     {
       Product product;
-      if (!TryFindProduct(requestedItem, out product, out errorResponse)) return false;
+      if (!TryFindProduct(requestedItem, out product)) return false;
 
       var orderItem = new OrderItem(product, requestedItem.Quantity, product.Price, requestedItem.Preferences);
       order.AddItem(orderItem);
       return true;
     }
 
-    private bool TryFindProduct(OrderItemRepresentation requestedItem, out Product product, out Response errorResponse)
+    private bool TryFindProduct(OrderItemRepresentation requestedItem, out Product product)
     {
       errorResponse = null;
       product = productRepository.GetByName(requestedItem.Name);
@@ -85,7 +85,7 @@ namespace RestBucks.Resources.Orders
       return true;
     }
 
-    private bool InvalidOrderResponse(out Response errorResponse, Order order)
+    private bool InvalidOrderResponse(Order order)
     {
       var content = string.Join("\n", order.GetErrorMessages());
       {
