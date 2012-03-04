@@ -1,25 +1,24 @@
 ﻿namespace RestBucks.Resources.Products
 {
   using System.Linq;
-  using System.ServiceModel;
-  using System.ServiceModel.Web;
 
-  using RestBucks.Data;
-  using RestBucks.Domain;
-  using RestBucks.Infrastructure;
+  using Data;
+  using Domain;
 
-  [ServiceContract, WithUriPrefix("menu")]
-  public class MenuResourceHandler
+  using Nancy;
+
+  public class MenuResourceHandler : NancyModule
   {
     private readonly IRepository<Product> productRepository;
 
-    public MenuResourceHandler(IRepository<Product> productRepository)
+    public MenuResourceHandler(IRepository<Product> productRepository) : base("menu")
     {
       this.productRepository = productRepository;
+
+      Get["/"] = _ => Response.AsXml(GetHandler());
     }
 
-    [WebGet(UriTemplate = "")]
-    public MenuRepresentation Get()
+    private MenuRepresentation GetHandler()
     {
       var products = productRepository.RetrieveAll().OrderBy(p => p.Name)
         .ToList()
