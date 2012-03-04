@@ -27,12 +27,7 @@
 
       Assert.That(
         itemsInResponse
-        .Single(element => element.Element("Name").Value == "latte"),
-        Is.Not.Null);
-      
-      Assert.That(
-        itemsInResponse
-        .Single(element => element.Element("Name").Value == "Other"),
+        .Single(element => element.Element("Name").Value == productName),
         Is.Not.Null);
     }
 
