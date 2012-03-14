@@ -11,32 +11,42 @@ using RestBucks.Resources.Orders.Representations;
 
 namespace RestBucks.Resources.Orders
 {
+  using Nancy;
+
   [ServiceContract, WithUriPrefix("order")]
-  public class OrderResourceHandler
+  public class OrderResourceHandler : NancyModule
   {
     private readonly IRepository<Order> orderRepository;
     private readonly IResourceLinker linker;
 
-    public OrderResourceHandler(IRepository<Order> orderRepository, IResourceLinker linker)
+    public static string BaseResoureUriTemplate = "/{orderId}/";
+    public static string Path = "/order";
+
+    public OrderResourceHandler(IRepository<Order> orderRepository, IResourceLinker linker) 
+      : base(Path)
     {
       this.orderRepository = orderRepository;
       this.linker = linker;
+
+      Get[BaseResoureUriTemplate] = parameters => GetHandler((int) parameters.orderId);
     }
 
     [WebGet(UriTemplate = "{orderId}")]
-    public HttpResponseMessage Get(int orderId, HttpRequestMessage request)
+    public Response GetHandler(int orderId)
     {
       var order = orderRepository.GetById(orderId);
-      if (order == null) return Responses.NotFound();
+      if (order == null) 
+        return Response.NotFound();
 
       if (order.Status == OrderStatus.Canceled)
-      {
-        return Responses.MovedTo(linker.GetUri<TrashHandler>(rh => rh.GetCanceled(0), new {orderId}));
-      }
+        return Response.MovedTo(linker.GetUri<TrashHandler>(rh => rh.GetCanceled(0), new {orderId}));
 
-      if (request.IsNotModified(order)) return Responses.NotModified(maxAge: TimeSpan.FromSeconds(10));
+      if (Request.IsNotModified(order)) 
+        return Response.NotModified();
 
-      var response = Responses.WithContent(OrderRepresentationMapper.Map(order))
+      var response = 
+        Response
+        .AsXml(OrderRepresentationMapper.Map(order))
         .AddCacheHeaders(order);
 
       return response;

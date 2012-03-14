@@ -142,7 +142,7 @@ namespace RestBucks.Tests.Resources
         .Callback<Order[]>(o => o.First().Id = 123);
 
       var expectedUriToTheNewOrder =
-        resourceLinker.GetUri<OrderResourceHandler>(or => or.Get(0, null), new { orderId = "123" });
+        resourceLinker.GetUri<OrderResourceHandler>(or => or.GetHandler(0), new { orderId = "123" });
 
       var appProxy = CreateAppProxy(orderRepository.Object);
       var orderRepresentation = new OrderRepresentation

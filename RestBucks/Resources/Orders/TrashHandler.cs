@@ -29,6 +29,7 @@ namespace RestBucks.Resources.Orders
 
             var order = orderRepository.Retrieve(o => o.Id == orderId && o.Status == OrderStatus.Canceled)
                                        .FirstOrDefault();
+
             return order == null ? Responses.NotFound()
                 : new HttpResponseMessage<OrderRepresentation>(OrderRepresentationMapper.Map(order));
         }

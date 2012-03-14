@@ -1,68 +1,95 @@
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using Microsoft.ApplicationServer.Http;
-using NUnit.Framework;
-using RestBucks.Domain;
-using RestBucks.Infrastructure.Linking;
-using RestBucks.Resources.Orders;
-using RestBucks.Resources.Orders.Representations;
-using RestBucks.Tests.Util;
-using SharpTestsEx;
-
 namespace RestBucks.Tests.Resources
 {
-    [TestFixture]
-    public class WhenUserGETsAnOrder
+  using System.Collections.Generic;
+  using System.Linq;
+  using System.Xml.Linq;
+
+  using NUnit.Framework;
+
+  using RestBucks.Domain;
+
+  using Util;
+
+  using SharpTestsEx;
+
+  using Nancy;
+  using Nancy.Testing;
+
+  [TestFixture]
+  public class WhenUserGETsAnOrder : ResourceHandlerTestBase
+  {
+    [Test]
+    public void WhenOrderHasNotChanged_ThenReturn304()
     {
-        private IResourceLinker resourceLinker = new ResourceLinker();
+      // Arrange
+      var orderRepo = new RepositoryStub<Order>(new Order {Version = 1, Id = 123});
+      var app = CreateAppProxy(orderRepo);
 
-        [Test]
-        public void WhenOrderHasNotChanged_ThenReturn304()
-        {
-            var handler = new OrderResourceHandler(new RepositoryStub<Order>(new Order{Version = 1, Id=123}), 
-                                                    resourceLinker);
+      // Acr
+      var response =
+        app.Get("/order/123/",
+                with =>
+                {
+                  with.HttpRequest();
+                  with.Header("If-None-Match", "\"1\"");
+                });
 
-            var request = new HttpRequestMessage{Headers = {IfNoneMatch = {new EntityTagHeaderValue("\"1\"")}}};
-            var response = handler.Get(123, request);
-            response.StatusCode.Should().Be.EqualTo(HttpStatusCode.NotModified);
-        }
-
-        [Test]
-        public void WhenOrderHasChanged_ThenReturn200()
-        {
-            var handler = new OrderResourceHandler(new RepositoryStub<Order>(new Order { Version = 2, Id = 123 }),
-                                                    resourceLinker);
-
-            var request = new HttpRequestMessage { Headers = { IfNoneMatch = { new EntityTagHeaderValue("\"1\"") } } };
-            var response = handler.Get(123, request);
-            response.StatusCode.Should().Be.EqualTo(HttpStatusCode.OK);
-        }
-
-        [Test]
-        public void WhenOrderDoesNotExist_ThenReturn404()
-        {
-            var emptyRepository = new RepositoryStub<Order>();
-            var handler = new OrderResourceHandler(emptyRepository, resourceLinker);
-            var response = handler.Get(123, new HttpRequestMessage());
-
-            response.StatusCode.Should().Be.EqualTo(HttpStatusCode.NotFound);
-        }
-
-        [Test]
-        public void WhenOrderExists_ThenReturn404()
-        {
-            var emptyRepository = new RepositoryStub<Order>(new Order
-                                                                {
-                                                                    Id = 123,
-                                                                    Location = Location.TakeAway
-                                                                });
-
-            var handler = new OrderResourceHandler(emptyRepository, resourceLinker);
-            var response = (HttpResponseMessage<OrderRepresentation>)handler.Get(123, new HttpRequestMessage());
-
-            response.Content.ReadAs()
-                .Location.Should().Be.EqualTo(Location.TakeAway);
-        }
+      //Assert
+      response.StatusCode.Should().Be.EqualTo(HttpStatusCode.NotModified);
     }
+
+    [Test]
+    public void WhenOrderHasChanged_ThenReturn200()
+    {
+      // Arrange
+      var orderRepo = new RepositoryStub<Order>(new Order {Version = 2, Id = 123});
+      var app = CreateAppProxy(orderRepo);
+
+      // Act
+      var response =
+        app.Get("/order/123/",
+                with =>
+                {
+                  with.HttpRequest();
+                  with.Header("If-None-Match", "\"1\"");
+                });
+
+      // Assert
+      response.StatusCode.Should().Be.EqualTo(HttpStatusCode.OK);
+    }
+
+    [Test]
+    public void WhenOrderDoesNotExist_ThenReturn404()
+    {
+      //Arrange 
+      var app = CreateAppProxy();
+
+      // Act
+      var response = app.Get("/order/123");
+
+      //Assert
+      response.StatusCode.Should().Be.EqualTo(HttpStatusCode.NotFound);
+    }
+
+    [Test]
+    public void WhenOrderExists_ThenReturnItsContent()
+    {
+      // Arrange
+      var order = new Order {Id = 123, Location = Location.TakeAway};
+      order.AddItem(new OrderItem(latte, 1, 1, new Dictionary<string, string>()));
+      var orderRepo = new RepositoryStub<Order>(order);
+
+      var app = CreateAppProxy(orderRepo);
+
+      //Act
+      var response = app.Get("/order/123/");
+
+      // Assert
+      response.StatusCode.Should().Be.EqualTo(HttpStatusCode.OK);
+      var body = response.BodyAsXml();
+      body.Descendants()
+        .Single(e => e.Name.LocalName == "location")
+        .Value.Should().Be.EqualTo(Location.TakeAway.ToXmlString());
+    }
+  }
 }

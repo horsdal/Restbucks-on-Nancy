@@ -83,9 +83,11 @@ namespace RestBucks.Resources.Orders
 
     private Response Created(Order order)
     {
-      var uri = resourceLinker.GetUri<OrderResourceHandler>(
-        orderResource => orderResource.Get(0, null),
+      var uri = resourceLinker.BuildUriString(
+        OrderResourceHandler.Path,
+        OrderResourceHandler.BaseResoureUriTemplate,
         new {orderId = order.Id});
+      
       return Response.Created(uri);
     }
   }

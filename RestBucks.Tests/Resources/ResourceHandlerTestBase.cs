@@ -23,9 +23,7 @@ namespace RestBucks.Tests.Resources
                                          }
                                      };
 
-    public Browser CreateAppProxy(
-      IRepository<Order> orderRepository = null,
-      IRepository<Product> productRepository = null)
+    public Browser CreateAppProxy(IRepository<Order> orderRepository = null, IRepository<Product> productRepository = null)
     {
       var defaultProductRepository = new RepositoryStub<Product>(
         latte, new Product {Name = "Other", Price = 3.6m});

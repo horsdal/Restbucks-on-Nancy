@@ -31,9 +31,12 @@ namespace RestBucks.Resources.Orders.Representations
       var baseUri = new UriSegment(BaseAddress.Current);
       var linker = new ResourceLinker();
 
-      var get = new Link(linker.GetUri<OrderResourceHandler>(r => r.Get(0, null), new {orderId = order.Id}),
+      var get = new Link(linker.BuildUriString(OrderResourceHandler.Path,
+                                               OrderResourceHandler.BaseResoureUriTemplate,
+                                               new {orderId = order.Id}),
                          baseUri + "docs/order-get.htm",
                          MediaTypes.Default);
+
       var update = new Link(linker.GetUri<OrderResourceHandler>(r => r.Update(0, null), new {orderId = order.Id}),
                             baseUri + "docs/order-update.htm",
                             MediaTypes.Default);

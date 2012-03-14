@@ -16,18 +16,23 @@ namespace RestBucks.Infrastructure.Linking
         {
             baseUri = new Uri(BaseAddress.Current, UriKind.Absolute);
         }
-        
+
+      public string BuildUriString(string prefix, string template, dynamic parameters)
+      {
+        var newBaseUri = new Uri(baseUri, prefix);
+        var uriTemplate = new UriTemplate(template, true);
+
+        return uriTemplate.BindByName(newBaseUri, ToDictionary(parameters ?? new { })).ToString();        
+      }
+
         public string GetUri<T>(Expression<Action<T>> method, object uriArgs = null)
         {
-            string prefix = GetServicePrefix<T>();
+          string prefix = GetServicePrefix<T>();
 
             var methodInfo = ((MethodCallExpression)method.Body).Method;
             var methodTemplate = GetUriTemplateForMethod(methodInfo);
-        
-            var newBaseUri = new Uri(baseUri, prefix);
-            var uriTemplate = new UriTemplate(methodTemplate, true);
 
-            return uriTemplate.BindByName(newBaseUri, ToDictionary(uriArgs ?? new{})).ToString();
+          return BuildUriString(prefix, methodTemplate, uriArgs);
         }
 
         

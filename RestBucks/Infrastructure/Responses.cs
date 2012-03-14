@@ -24,6 +24,35 @@ namespace RestBucks.Infrastructure
       Response response= Nancy.HttpStatusCode.Created;
       return response.WithHeader("Location", location);
     }
+
+    public static Response NotFound(this IResponseFormatter formatter)
+    {
+      Response response = Nancy.HttpStatusCode.NotFound;
+      return response.WithHeader("ReasonPhrase", "Not found");      
+    }
+
+    public static Response MovedTo(this IResponseFormatter formatter, string newUri)
+    {
+      Response response = Nancy.HttpStatusCode.MovedPermanently;
+      return response.WithHeaders(
+        "ReasonPhrase", "Not found",
+        "Location", new Uri(newUri, UriKind.Absolute));
+    }
+
+    public static Response NotModified(this IResponseFormatter formatter, TimeSpan? maxAge = null)
+    {
+      Response response = Nancy.HttpStatusCode.NotModified;
+      return response.WithHeaders(
+        new Tuple<string, string>("ReasonPhrase", "Not modified"),
+        new Tuple<string, string>("Cache-Control", string.Format("max-age={0}, public", maxAge ?? TimeSpan.FromSeconds(10))));
+    }
+
+    public static Response AddCacheHeaders(this Response response, IVersionable versionable, TimeSpan? maxAge = null)
+    {
+      return response.WithHeaders(
+        new Tuple<string, string>("ETag", string.Format("\"{0}\"", versionable.Version)),
+        new Tuple<string, string>("Cache-Control", string.Format("max-age={0}, public", maxAge ?? TimeSpan.FromSeconds(10))));
+    }
   }
 
   public static class Responses
