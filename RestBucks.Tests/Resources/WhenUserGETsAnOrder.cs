@@ -89,7 +89,7 @@ namespace RestBucks.Tests.Resources
       var body = response.BodyAsXml();
       body.Descendants()
         .Single(e => e.Name.LocalName == "location")
-        .Value.Should().Be.EqualTo(Location.TakeAway.ToXmlString());
+        .Value.Should().Be.EqualTo("takeAway");
     }
   }
 }
