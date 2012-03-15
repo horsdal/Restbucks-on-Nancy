@@ -11,6 +11,9 @@ using RestBucks.Resources.Orders.Representations;
 
 namespace RestBucks.Resources.Orders
 {
+  using System.IO;
+  using System.Xml.Serialization;
+
   using Nancy;
   using Nancy.ModelBinding;
 
@@ -21,6 +24,7 @@ namespace RestBucks.Resources.Orders
     private readonly IResourceLinker linker;
 
     public static string SlashOrderId = "/{orderId}/";
+    public static string PaymentPath = "/{orderId}/payment/";
     public static string Path = "/order";
 
     public OrderResourceHandler(IRepository<Order> orderRepository, IResourceLinker linker) 
@@ -32,6 +36,13 @@ namespace RestBucks.Resources.Orders
       Get[SlashOrderId] = parameters => GetHandler((int) parameters.orderId);
       Post[SlashOrderId] = parameters => Update((int)parameters.orderId, this.Bind<OrderRepresentation>());
       Delete[SlashOrderId] = parameters => Cancel((int) parameters.orderId);
+      Post[PaymentPath] = parameters => Pay((int) parameters.orderId, FromXmlStream<PaymentRepresentation>(Request.Body));
+    }
+
+    public static T FromXmlStream<T>(Stream ms)
+    {
+      var ser = new XmlSerializer(typeof(T));
+      return (T)ser.Deserialize(ms);
     }
 
     [WebGet(UriTemplate = "{orderId}")]
@@ -74,12 +85,13 @@ namespace RestBucks.Resources.Orders
     }
 
     [WebInvoke(UriTemplate = "{orderId}/payment", Method = "POST")]
-    public HttpResponseMessage Pay(int orderId, PaymentRepresentation paymentArgs)
+    public Response Pay(int orderId, PaymentRepresentation paymentArgs)
     {
       var order = orderRepository.GetById(orderId);
-      if (order == null) return Responses.NotFound();
+      if (order == null) 
+        return HttpStatusCode.NotFound;
       order.Pay(paymentArgs.CardNumber, paymentArgs.CardOwner);
-      return Responses.Ok();
+      return HttpStatusCode.OK;
     }
 
     [WebGet(UriTemplate = "{orderId}/receipt")]

@@ -47,7 +47,8 @@ namespace RestBucks.Tests.Resources
                               with =>
                               {
                                 with.HttpRequest();
-                                with.Body(new PaymentRepresentation { CardNumber = "321", CardOwner = "Jose" }.ToXmlString());
+                                var xmlString = new PaymentRepresentation {CardNumber = "321", CardOwner = "Jose"}.ToXmlString();
+                                with.Body(xmlString);
                               });
  
       order.Status.Should().Be.EqualTo(OrderStatus.Paid);
