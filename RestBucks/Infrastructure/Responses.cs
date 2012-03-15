@@ -29,23 +29,23 @@ namespace RestBucks.Infrastructure
     {
       Response response = Nancy.HttpStatusCode.MovedPermanently;
       return response.WithHeaders(
-        new Tuple<string, string>("ReasonPhrase", "Not found"),
-        new Tuple<string, string>("Location", new Uri(newUri, UriKind.Absolute).ToString()));
+        new { Header = "ReasonPhrase", Value = "Not found" },
+        new { Header = "Location", Value = new Uri(newUri, UriKind.Absolute).ToString() });
     }
 
     public static Response NotModified(this IResponseFormatter formatter, TimeSpan? maxAge = null)
     {
       Response response = Nancy.HttpStatusCode.NotModified;
       return response.WithHeaders(
-        new Tuple<string, string>("ReasonPhrase", "Not modified"),
-        new Tuple<string, string>("Cache-Control", string.Format("max-age={0}, public", maxAge ?? TimeSpan.FromSeconds(10))));
+        new { Header = "ReasonPhrase", Value = "Not modified"},
+        new { Header = "Cache-Control", Value = string.Format("max-age={0}, public", maxAge ?? TimeSpan.FromSeconds(10)) });
     }
 
     public static Response AddCacheHeaders(this Response response, IVersionable versionable, TimeSpan? maxAge = null)
     {
       return response.WithHeaders(
-        new Tuple<string, string>("ETag", string.Format("\"{0}\"", versionable.Version)),
-        new Tuple<string, string>("Cache-Control", string.Format("max-age={0}, public", maxAge ?? TimeSpan.FromSeconds(10))));
+        new { Header = "ETag", Value = string.Format("\"{0}\"", versionable.Version) },
+        new { Header = "Cache-Control", Value = string.Format("max-age={0}, public", maxAge ?? TimeSpan.FromSeconds(10)) });
     }
   }
 
