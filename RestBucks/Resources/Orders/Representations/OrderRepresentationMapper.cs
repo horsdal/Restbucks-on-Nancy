@@ -32,7 +32,7 @@ namespace RestBucks.Resources.Orders.Representations
       var linker = new ResourceLinker();
 
       var get = new Link(linker.BuildUriString(OrderResourceHandler.Path,
-                                               OrderResourceHandler.BaseResoureUriTemplate,
+                                               OrderResourceHandler.SlashOrderId,
                                                new {orderId = order.Id}),
                          baseUri + "docs/order-get.htm",
                          MediaTypes.Default);

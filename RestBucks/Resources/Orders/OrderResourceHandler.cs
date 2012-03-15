@@ -12,6 +12,7 @@ using RestBucks.Resources.Orders.Representations;
 namespace RestBucks.Resources.Orders
 {
   using Nancy;
+  using Nancy.ModelBinding;
 
   [ServiceContract, WithUriPrefix("order")]
   public class OrderResourceHandler : NancyModule
@@ -19,7 +20,7 @@ namespace RestBucks.Resources.Orders
     private readonly IRepository<Order> orderRepository;
     private readonly IResourceLinker linker;
 
-    public static string BaseResoureUriTemplate = "/{orderId}/";
+    public static string SlashOrderId = "/{orderId}/";
     public static string Path = "/order";
 
     public OrderResourceHandler(IRepository<Order> orderRepository, IResourceLinker linker) 
@@ -28,7 +29,8 @@ namespace RestBucks.Resources.Orders
       this.orderRepository = orderRepository;
       this.linker = linker;
 
-      Get[BaseResoureUriTemplate] = parameters => GetHandler((int) parameters.orderId);
+      Get[SlashOrderId] = parameters => GetHandler((int) parameters.orderId);
+      Post[SlashOrderId] = parameter => Update((int)parameter.orderId, this.Bind<OrderRepresentation>());
     }
 
     [WebGet(UriTemplate = "{orderId}")]
@@ -53,12 +55,14 @@ namespace RestBucks.Resources.Orders
     }
 
     [WebInvoke(UriTemplate = "{orderId}", Method = "POST")]
-    public HttpResponseMessage Update(int orderId, OrderRepresentation orderRepresentation)
+    public Response Update(int orderId, OrderRepresentation orderRepresentation)
     {
       var order = orderRepository.GetById(orderId);
-      if (order == null) return Responses.NotFound();
+      if (order == null)
+        return Response.NotFound();
+
       order.Location = orderRepresentation.Location;
-      return Responses.NoContent();
+      return HttpStatusCode.NoContent;
     }
 
     [WebInvoke(UriTemplate = "{orderId}", Method = "DELETE")]

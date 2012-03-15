@@ -85,7 +85,7 @@ namespace RestBucks.Resources.Orders
     {
       var uri = resourceLinker.BuildUriString(
         OrderResourceHandler.Path,
-        OrderResourceHandler.BaseResoureUriTemplate,
+        OrderResourceHandler.SlashOrderId,
         new {orderId = order.Id});
       
       return Response.Created(uri);
