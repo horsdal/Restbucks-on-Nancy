@@ -29,8 +29,8 @@ namespace RestBucks.Infrastructure
     {
       Response response = Nancy.HttpStatusCode.MovedPermanently;
       return response.WithHeaders(
-        "ReasonPhrase", "Not found",
-        "Location", new Uri(newUri, UriKind.Absolute));
+        new Tuple<string, string>("ReasonPhrase", "Not found"),
+        new Tuple<string, string>("Location", new Uri(newUri, UriKind.Absolute).ToString()));
     }
 
     public static Response NotModified(this IResponseFormatter formatter, TimeSpan? maxAge = null)

@@ -30,7 +30,8 @@ namespace RestBucks.Resources.Orders
       this.linker = linker;
 
       Get[SlashOrderId] = parameters => GetHandler((int) parameters.orderId);
-      Post[SlashOrderId] = parameter => Update((int)parameter.orderId, this.Bind<OrderRepresentation>());
+      Post[SlashOrderId] = parameters => Update((int)parameters.orderId, this.Bind<OrderRepresentation>());
+      Delete[SlashOrderId] = parameters => Cancel((int) parameters.orderId);
     }
 
     [WebGet(UriTemplate = "{orderId}")]
@@ -62,12 +63,14 @@ namespace RestBucks.Resources.Orders
     }
 
     [WebInvoke(UriTemplate = "{orderId}", Method = "DELETE")]
-    public HttpResponseMessage Cancel(int orderId)
+    public Response Cancel(int orderId)
     {
       var order = orderRepository.GetById(orderId);
-      if (order == null) return Responses.NotFound();
+      if (order == null)
+        return HttpStatusCode.NotFound;
+
       order.Cancel("canceled from the rest interface");
-      return Responses.NoContent();
+      return HttpStatusCode.NoContent;
     }
 
     [WebInvoke(UriTemplate = "{orderId}/payment", Method = "POST")]
