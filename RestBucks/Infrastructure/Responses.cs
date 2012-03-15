@@ -25,12 +25,6 @@ namespace RestBucks.Infrastructure
       return response.WithHeader("Location", location);
     }
 
-    public static Response NotFound(this IResponseFormatter formatter)
-    {
-      Response response = Nancy.HttpStatusCode.NotFound;
-      return response.WithHeader("ReasonPhrase", "Not found");      
-    }
-
     public static Response MovedTo(this IResponseFormatter formatter, string newUri)
     {
       Response response = Nancy.HttpStatusCode.MovedPermanently;

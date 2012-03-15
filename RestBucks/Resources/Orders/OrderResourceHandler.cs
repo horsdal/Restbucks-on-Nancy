@@ -38,7 +38,7 @@ namespace RestBucks.Resources.Orders
     {
       var order = orderRepository.GetById(orderId);
       if (order == null) 
-        return Response.NotFound();
+        return HttpStatusCode.NotFound;
 
       if (order.Status == OrderStatus.Canceled)
         return Response.MovedTo(linker.GetUri<TrashHandler>(rh => rh.GetCanceled(0), new {orderId}));
@@ -46,12 +46,8 @@ namespace RestBucks.Resources.Orders
       if (Request.IsNotModified(order)) 
         return Response.NotModified();
 
-      var response = 
-        Response
-        .AsXml(OrderRepresentationMapper.Map(order))
-        .AddCacheHeaders(order);
-
-      return response;
+      return Response.AsXml(OrderRepresentationMapper.Map(order))
+                     .AddCacheHeaders(order);
     }
 
     [WebInvoke(UriTemplate = "{orderId}", Method = "POST")]
@@ -59,7 +55,7 @@ namespace RestBucks.Resources.Orders
     {
       var order = orderRepository.GetById(orderId);
       if (order == null)
-        return Response.NotFound();
+        return HttpStatusCode.NotFound;
 
       order.Location = orderRepresentation.Location;
       return HttpStatusCode.NoContent;

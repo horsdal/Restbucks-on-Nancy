@@ -5,12 +5,10 @@ namespace RestBucks.Tests.Resources
   using Nancy;
 
   using RestBucks.Domain;
-
-  using Infrastructure.Linking;
-
-  using RestBucks.Resources.Orders;
   using RestBucks.Resources.Orders.Representations;
 
+  using Infrastructure.Linking;
+  
   using Util;
 
   using SharpTestsEx;
@@ -45,7 +43,7 @@ namespace RestBucks.Tests.Resources
       var app = CreateAppProxy(new RepositoryStub<Order>(order));
 
       // Act
-      var response = app.Post("order/123/",
+      var response = app.Post("/order/123/",
                               with =>
                               {
                                 with.HttpRequest();
