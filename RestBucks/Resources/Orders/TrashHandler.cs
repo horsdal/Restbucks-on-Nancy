@@ -10,7 +10,7 @@ using RestBucks.Resources.Orders.Representations;
 
 namespace RestBucks.Resources.Orders
 {
-    //TODO: I will wait WebAPI to add better support for nested resources.
+  //TODO: Move to Nancy
     [ServiceContract, WithUriPrefix("trash")]
     public class TrashHandler
     {
@@ -30,7 +30,7 @@ namespace RestBucks.Resources.Orders
             var order = orderRepository.Retrieve(o => o.Id == orderId && o.Status == OrderStatus.Canceled)
                                        .FirstOrDefault();
 
-            return order == null ? Responses.NotFound()
+            return order == null ? null // HttpStatusCode.NotFound()
                 : new HttpResponseMessage<OrderRepresentation>(OrderRepresentationMapper.Map(order));
         }
     }
