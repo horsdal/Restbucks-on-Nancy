@@ -37,18 +37,29 @@ namespace RestBucks.Resources.Orders.Representations
                          baseUri + "docs/order-get.htm",
                          MediaTypes.Default);
 
-      var update = new Link(linker.GetUri<OrderResourceHandler>(r => r.Update(0, null), new {orderId = order.Id}),
-                            baseUri + "docs/order-update.htm",
-                            MediaTypes.Default);
-      var cancel = new Link(linker.GetUri<OrderResourceHandler>(r => r.Cancel(0), new {orderId = order.Id}),
-                            baseUri + "docs/order-cancel.htm",
-                            MediaTypes.Default);
-      var pay = new Link(linker.GetUri<OrderResourceHandler>(r => r.Pay(0, null), new {orderId = order.Id}),
-                         baseUri + "docs/order-pay.htm",
-                         MediaTypes.Default);
-      var receipt = new Link(linker.GetUri<OrderResourceHandler>(r => r.Receipt(0), new {orderId = order.Id}),
-                             baseUri + "docs/receipt-coffee.htm",
-                             MediaTypes.Default);
+      var update = new Link(linker.BuildUriString(OrderResourceHandler.Path,
+                                                  OrderResourceHandler.SlashOrderId,
+                                                  new {orderId = order.Id}),
+                                                  baseUri + "docs/order-update.htm",
+                                                  MediaTypes.Default);
+
+      var cancel = new Link(linker.BuildUriString(OrderResourceHandler.Path,
+                                                  OrderResourceHandler.SlashOrderId,
+                                                  new {orderId = order.Id}),
+                                                  baseUri + "docs/order-cancel.htm",
+                                                  MediaTypes.Default);
+
+      var pay = new Link(linker.BuildUriString(OrderResourceHandler.Path,
+                                               OrderResourceHandler.PaymentPath,
+                                               new {orderId = order.Id}),
+                                               baseUri + "docs/order-pay.htm",
+                                               MediaTypes.Default);
+
+      var receipt = new Link(linker.BuildUriString(OrderResourceHandler.Path,
+                                                   OrderResourceHandler.ReceiptPath,
+                                                   new {orderId = order.Id}),
+                                                   baseUri + "docs/receipt-coffee.htm",
+                                                   MediaTypes.Default);
 
       switch (order.Status)
       {
