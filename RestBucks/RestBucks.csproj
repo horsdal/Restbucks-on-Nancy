@@ -160,7 +160,6 @@
     <Compile Include="Resources\Orders\TrashHandler.cs" />
     <Compile Include="Resources\Orders\Representations\OrderRepresentationMapper.cs" />
     <Compile Include="Resources\Orders\Representations\PaymentRepresentation.cs" />
-    <Compile Include="Formatters\RestBuckMediaTypeFormatter.cs" />
     <Compile Include="Domain\OrderStatus.cs" />
     <Compile Include="Domain\Product.cs" />
     <Compile Include="Infrastructure\Installers\NHibernateInstaller.cs" />
@@ -193,7 +192,6 @@
     <Compile Include="Resources\Menu\ItemRepresentation.cs" />
     <Compile Include="Resources\Menu\MenuRepresentation.cs" />
     <Compile Include="Resources\Menu\MenuResourceHandler.cs" />
-    <Compile Include="Util\UriHelper.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

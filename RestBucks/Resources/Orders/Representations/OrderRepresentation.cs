@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Xml.Serialization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using RestBucks.Domain;
-
-namespace RestBucks.Resources.Orders.Representations
+﻿namespace RestBucks.Resources.Orders.Representations
 {
+  using System.Collections.Generic;
+  using System.Xml.Serialization;
+
+  using Newtonsoft.Json;
+  using Newtonsoft.Json.Converters;
+
+  using RestBucks.Domain;
+
   [XmlRoot(ElementName = "order", Namespace = "http://restbuckson.net")]
   public class OrderRepresentation : RepresentationBase
   {
@@ -28,5 +30,4 @@ namespace RestBucks.Resources.Orders.Representations
     [JsonConverter(typeof (StringEnumConverter))]
     public OrderStatus Status { get; set; }
   }
-
 }

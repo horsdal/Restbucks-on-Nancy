@@ -1,4 +1,3 @@
-
 namespace RestBucks.Infrastructure
 {
   using System;

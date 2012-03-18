@@ -76,7 +76,5 @@ namespace RestBucks.Formatters
             writer.Flush();
 
         }
-
-
     }
 }
