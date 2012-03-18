@@ -24,8 +24,7 @@ namespace RestBucks.Infrastructure.Installers
       container.Register(AllTypes.FromThisAssembly()
                            .Where(t => Attribute.IsDefined(t, typeof (ServiceContractAttribute)))
                            .WithService.Self()
-                           .Configure(
-                             c => c.Interceptors(new[] {typeof (RestBucksHttpErrorHandler)}).LifeStyle.Transient));
+                           .Configure(c => c.Interceptors(new[] {typeof (RestBucksHttpErrorHandler)})));
 
       container.Register(Component.For<RestBucksHttpErrorHandler>());
       //TODO: remove the ErrorHandlerInterceptor.
