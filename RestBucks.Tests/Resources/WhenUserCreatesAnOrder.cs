@@ -138,11 +138,12 @@ namespace RestBucks.Tests.Resources
     public void WhenOrderIsOk_ThenResponseHasStatus201AndLocation()
     {
       var orderRepository = new Mock<IRepository<Order>>();
-      orderRepository.Setup(or => or.MakePersistent(It.IsAny<Order[]>()))
+      orderRepository
+        .Setup(or => or.MakePersistent(It.IsAny<Order[]>()))
         .Callback<Order[]>(o => o.First().Id = 123);
 
       var expectedUriToTheNewOrder =
-        resourceLinker.GetUri<OrderResourceHandler>(or => or.GetHandler(0), new { orderId = "123" });
+        resourceLinker.BuildUriString("/order/", OrderResourceHandler.SlashOrderId,new { orderId = "123" });
 
       var appProxy = CreateAppProxy(orderRepository.Object);
       var orderRepresentation = new OrderRepresentation
