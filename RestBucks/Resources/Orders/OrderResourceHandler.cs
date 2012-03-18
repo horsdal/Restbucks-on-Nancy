@@ -49,7 +49,7 @@ namespace RestBucks.Resources.Orders
         return HttpStatusCode.NotFound;
 
       if (order.Status == OrderStatus.Canceled)
-        return Response.MovedTo(linker.GetUri<TrashHandler>(rh => rh.GetCanceled(0), new {orderId}));
+        return Response.MovedTo(linker.BuildUriString(TrashHandler.path, TrashHandler.GetCancelledPath, new {orderId}));
 
       if (Request.IsNotModified(order)) 
         return Response.NotModified();
