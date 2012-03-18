@@ -1,11 +1,12 @@
-﻿using System;
-
-namespace RestBucks.Infrastructure
+﻿namespace RestBucks.Infrastructure
 {
-    public class InvalidOrderOperationException : Exception
+  using System;
+
+  public class InvalidOrderOperationException : Exception
+  {
+    public InvalidOrderOperationException(string message)
+      : base(message)
     {
-        public InvalidOrderOperationException(string message)
-            : base(message)
-        {}
     }
+  }
 }
