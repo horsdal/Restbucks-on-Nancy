@@ -36,7 +36,6 @@ namespace RestBucks.Tests.Resources
            {
              with.Dependency<IRepository<Product>>(productRepository ?? defaultProductRepository);
              with.Dependency<IRepository<Order>>(orderRepository ?? new RepositoryStub<Order>());
-             with.Dependency<IResourceLinker>(new ResourceLinker("http://bougs"));
            }
           ));
     }

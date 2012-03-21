@@ -22,7 +22,7 @@ namespace RestBucks.Tests.Resources
   [TestFixture]
   public class WhenUserCreatesAnOrder : ResourceHandlerTestBase
   {
-    private readonly IResourceLinker resourceLinker = new ResourceLinker("http://bogus/");
+    private readonly ResourceLinker resourceLinker = new ResourceLinker("http://bogus/");
 
     [Test]
     public void WhenAProductDoesNotExist_ThenReturn400AndTheProperREasonPhrase()
