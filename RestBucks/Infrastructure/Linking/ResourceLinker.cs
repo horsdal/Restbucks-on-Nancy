@@ -9,9 +9,9 @@
   {
     private readonly Uri baseUri;
 
-    public ResourceLinker()
+    public ResourceLinker(string httpBaseuri)
     {
-      baseUri = new Uri(BaseAddress.Current, UriKind.Absolute);
+      baseUri = new Uri(httpBaseuri, UriKind.Absolute);
     }
 
     public string BuildUriString(string prefix, string template, dynamic parameters)

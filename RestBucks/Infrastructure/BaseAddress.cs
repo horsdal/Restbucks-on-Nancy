@@ -6,7 +6,7 @@
   {
     public static string Current
     {
-      get { return ConfigurationManager.AppSettings["baseUri"] ?? ""; }
+      get { return  ConfigurationManager.AppSettings["baseUri"] ?? ""; }
     }
   }
 }

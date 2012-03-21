@@ -10,7 +10,7 @@
 
   public static class OrderRepresentationMapper
   {
-    public static OrderRepresentation Map(Order order)
+    public static OrderRepresentation Map(Order order, string baseAddress)
     {
       return new OrderRepresentation
              {
@@ -23,15 +23,15 @@
                                                  Preferences = i.Preferences.ToDictionary(p => p.Key, p => p.Value),
                                                  Quantity = i.Quantity
                                                }).ToList(),
-               Links = GetLinks(order).ToList()
+               Links = GetLinks(order, baseAddress).ToList()
              };
 
     }
 
-    private static IEnumerable<Link> GetLinks(Order order)
+    private static IEnumerable<Link> GetLinks(Order order, string baseAddress)
     {
-      var baseUri = new UriSegment(BaseAddress.Current);
-      var linker = new ResourceLinker();
+      var baseUri = new UriSegment(baseAddress);
+      var linker = new ResourceLinker(baseAddress);
 
       var get = new Link(linker.BuildUriString(OrderResourceHandler.Path,
                                                OrderResourceHandler.SlashOrderId,

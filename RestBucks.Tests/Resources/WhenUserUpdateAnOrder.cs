@@ -7,8 +7,6 @@ namespace RestBucks.Tests.Resources
   using RestBucks.Domain;
   using RestBucks.Resources.Orders.Representations;
 
-  using Infrastructure.Linking;
-  
   using Util;
 
   using SharpTestsEx;
@@ -16,8 +14,6 @@ namespace RestBucks.Tests.Resources
   [TestFixture]
   public class WhenUserUpdateAnOrder : ResourceHandlerTestBase
   {
-    private readonly IResourceLinker resourceLinker = new ResourceLinker();
-
     [Test]
     public void WhenOrderDoesNotExist_ThenReturn404()
     {

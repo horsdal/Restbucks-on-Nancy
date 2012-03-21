@@ -66,7 +66,7 @@ namespace RestBucks.Tests.Resources
       var response = app.Delete("/order/123/");
       var responseToGet = app.Get("/order/123/");
 
-      var expected = "http://restbuckson.net/trash/order/123";
+      var expected = "http://bogus/trash/order/123";
       responseToGet.StatusCode.Should().Be.EqualTo(HttpStatusCode.MovedPermanently);
       responseToGet.Headers.ContainsKey("Location").Should().Be.True();
       responseToGet.Headers["Location"].Should().Be.EqualTo(expected);
@@ -77,7 +77,7 @@ namespace RestBucks.Tests.Resources
     {
       // Arrange
       var order = new Order { Id = 123 };
-      var expectedBody = OrderRepresentationMapper.Map(order).ToXmlString();
+      var expectedBody = OrderRepresentationMapper.Map(order, "").ToXmlString();
       var app = CreateAppProxy(new RepositoryStub<Order>(order));
 
       // Act

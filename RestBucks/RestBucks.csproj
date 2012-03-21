@@ -137,6 +137,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Bots\Barista.cs" />
     <Compile Include="Domain\BaseClass\IVersionable.cs" />
     <Compile Include="Global.asax.cs">

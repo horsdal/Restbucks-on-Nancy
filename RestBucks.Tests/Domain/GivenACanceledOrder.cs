@@ -16,7 +16,7 @@ namespace RestBucks.Tests.Domain
         {
             order = new Order();
             order.Cancel("You are too slow.");
-            representation = OrderRepresentationMapper.Map(order);
+            representation = OrderRepresentationMapper.Map(order, "http://baseaddress/");
         }
 
         [Test]

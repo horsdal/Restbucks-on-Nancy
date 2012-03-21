@@ -1,5 +1,7 @@
 namespace RestBucks.Tests.Resources
 {
+  using Infrastructure.Linking;
+
   using Nancy.Testing;
 
   using RestBucks.Data;
@@ -34,6 +36,7 @@ namespace RestBucks.Tests.Resources
            {
              with.Dependency<IRepository<Product>>(productRepository ?? defaultProductRepository);
              with.Dependency<IRepository<Order>>(orderRepository ?? new RepositoryStub<Order>());
+             with.Dependency<IResourceLinker>(new ResourceLinker("http://bougs"));
            }
           ));
     }

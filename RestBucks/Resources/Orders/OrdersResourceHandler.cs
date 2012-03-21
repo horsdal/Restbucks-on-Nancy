@@ -18,17 +18,14 @@ namespace RestBucks.Resources.Orders
   {
     private readonly IRepository<Product> productRepository;
     private readonly IRepository<Order> orderRepository;
-    private readonly IResourceLinker resourceLinker;
     private Response errorResponse;
 
     public OrdersResourceHandler(IRepository<Product> productRepository,
-                                 IRepository<Order> orderRepository,
-                                 IResourceLinker resourceLinker)
+                                 IRepository<Order> orderRepository)
       : base("/orders")
     {
       this.productRepository = productRepository;
       this.orderRepository = orderRepository;
-      this.resourceLinker = resourceLinker;
 
       Post["/"] = _ => HandlePost(this.Bind<OrderRepresentation>());
     }
@@ -83,7 +80,7 @@ namespace RestBucks.Resources.Orders
 
     private Response Created(Order order)
     {
-      var uri = resourceLinker.BuildUriString(
+      var uri = new ResourceLinker(Request.BaseUri()).BuildUriString(
         OrderResourceHandler.Path,
         OrderResourceHandler.SlashOrderId,
         new {orderId = order.Id});

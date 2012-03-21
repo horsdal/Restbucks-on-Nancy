@@ -2,6 +2,8 @@ namespace RestBucks.Resources.Orders
 {
   using System.Linq;
 
+  using Infrastructure;
+
   using Nancy;
 
   using Data;
@@ -29,7 +31,7 @@ namespace RestBucks.Resources.Orders
 
       return order == null
                ? HttpStatusCode.NotFound
-               : Response.AsXml(OrderRepresentationMapper.Map(order));
+               : Response.AsXml(OrderRepresentationMapper.Map(order, Request.BaseUri()));
     }
   }
 }

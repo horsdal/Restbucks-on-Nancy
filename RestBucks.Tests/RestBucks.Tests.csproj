@@ -57,6 +57,9 @@
     <Reference Include="Nancy">
       <HintPath>..\packages\Nancy.0.10.0\lib\net40\Nancy.dll</HintPath>
     </Reference>
+    <Reference Include="Nancy.Bootstrappers.Windsor">
+      <HintPath>..\packages\Nancy.Bootstrappers.Windsor.0.10.0\lib\net40\Nancy.Bootstrappers.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="Nancy.Testing">
       <HintPath>..\packages\Nancy.Testing.0.10.0\lib\net40\Nancy.Testing.dll</HintPath>
     </Reference>
@@ -101,6 +104,7 @@
     <Compile Include="Domain\GivenAReadyOrder.cs" />
     <Compile Include="Domain\OrderTests.cs" />
     <Compile Include="Domain\EqualityMemberTests.cs" />
+    <Compile Include="IntegrationSmokeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Representations\OrderRepresentationJsonTests.cs" />
     <Compile Include="Representations\OrderRepresentationTests.cs" />

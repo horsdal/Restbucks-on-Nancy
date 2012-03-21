@@ -1,11 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace RestBucks.Tests
+﻿namespace RestBucks.Tests
 {
-  class IntegrationSmokeTests
+  using NUnit.Framework;
+
+  using Nancy.Testing;
+
+  using RestBucks;
+
+  [TestFixture]
+  public class IntegrationSmokeTests
   {
+    [Test]
+    public void AppCanInitializeWithRealDependencies()
+    {
+      Assert.DoesNotThrow(
+        () => new Browser(new Bootstrapper())
+        );
+    }
   }
 }

@@ -18,16 +18,12 @@ namespace RestBucks.Infrastructure.Installers
   {
     public void Install(IWindsorContainer container, IConfigurationStore store)
     {
-      container.Register(Component.For<IResourceLinker>()
-                           .ImplementedBy<ResourceLinker>());
-
       container.Register(AllTypes.FromThisAssembly()
                            .Where(t => Attribute.IsDefined(t, typeof (ServiceContractAttribute)))
                            .WithService.Self()
                            .Configure(c => c.Interceptors(new[] {typeof (RestBucksHttpErrorHandler)})));
 
       container.Register(Component.For<RestBucksHttpErrorHandler>());
-      //TODO: remove the ErrorHandlerInterceptor.
 
       container.Register(AllTypes.FromThisAssembly()
                            .BasedOn<HttpErrorHandler>()

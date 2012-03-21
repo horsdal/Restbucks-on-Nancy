@@ -15,7 +15,7 @@ namespace RestBucks.Tests.Domain
         public void SetUp()
         {
             order = new Order();
-            representation = OrderRepresentationMapper.Map(order);
+            representation = OrderRepresentationMapper.Map(order, "http://restbuckson.net/");
         }
         [Test]
         public void ThenNextStepsIncludeCancel()

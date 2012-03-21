@@ -17,18 +17,16 @@ namespace RestBucks.Resources.Orders
   public class OrderResourceHandler : NancyModule
   {
     private readonly IRepository<Order> orderRepository;
-    private readonly IResourceLinker linker;
 
     public static string Path = "/order";
     public static string SlashOrderId = "/{orderId}/";
     public static string PaymentPath = "/{orderId}/payment/";
     public static string ReceiptPath = "/{orderId}/receipt/";
 
-    public OrderResourceHandler(IRepository<Order> orderRepository, IResourceLinker linker) 
+    public OrderResourceHandler(IRepository<Order> orderRepository) 
       : base(Path)
     {
       this.orderRepository = orderRepository;
-      this.linker = linker;
 
       Get[SlashOrderId] = parameters => GetHandler((int) parameters.orderId);
       Post[SlashOrderId] = parameters => Update((int)parameters.orderId, this.Bind<OrderRepresentation>());
@@ -49,12 +47,12 @@ namespace RestBucks.Resources.Orders
         return HttpStatusCode.NotFound;
 
       if (order.Status == OrderStatus.Canceled)
-        return Response.MovedTo(linker.BuildUriString(TrashHandler.path, TrashHandler.GetCancelledPath, new {orderId}));
+        return Response.MovedTo(new ResourceLinker(Request.BaseUri()).BuildUriString(TrashHandler.path, TrashHandler.GetCancelledPath, new {orderId}));
 
       if (Request.IsNotModified(order)) 
         return Response.NotModified();
 
-      return Response.AsXml(OrderRepresentationMapper.Map(order))
+      return Response.AsXml(OrderRepresentationMapper.Map(order, Request.BaseUri()))
                      .AddCacheHeaders(order);
     }
 

@@ -18,7 +18,7 @@ namespace RestBucks.Tests.Domain
         {
             order = new Order();
             order.Pay("123", "jose");
-            representation = OrderRepresentationMapper.Map(order);
+            representation = OrderRepresentationMapper.Map(order, "http://restbuckson.net/");
         }
 
 
