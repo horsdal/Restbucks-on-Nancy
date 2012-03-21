@@ -5,7 +5,7 @@
   using System.ComponentModel;
   using System.Linq;
 
-  public class ResourceLinker : IResourceLinker
+  public class ResourceLinker
   {
     private readonly Uri baseUri;
 

@@ -171,7 +171,6 @@
     <Compile Include="Infrastructure\Installers\NHibernateInstaller.cs" />
     <Compile Include="Infrastructure\Installers\RepositoryInstaller.cs" />
     <Compile Include="Infrastructure\Installers\WebApiInstaller.cs" />
-    <Compile Include="Infrastructure\Linking\IResourceLinker.cs" />
     <Compile Include="Infrastructure\Linking\ResourceLinker.cs" />
     <Compile Include="Infrastructure\Router.cs" />
     <Compile Include="Infrastructure\SessionManagement\ISessionFactoryProvider.cs" />

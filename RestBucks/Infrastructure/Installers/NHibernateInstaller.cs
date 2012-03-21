@@ -10,6 +10,7 @@ namespace RestBucks.Infrastructure.Installers
 
   using NHibernate;
   using NHibernate.Cfg;
+  using NHibernate.Context;
   using NHibernate.Dialect;
 
   using RestBucks.Data;
@@ -46,7 +47,7 @@ namespace RestBucks.Infrastructure.Installers
                                           db.LogFormatedSql = true;
                                           db.KeywordsAutoImport = Hbm2DDLKeyWords.AutoQuote;
                                         });
-      configuration.CurrentSessionContext<LazySessionContext>();
+      configuration.CurrentSessionContext<CallSessionContext>();
       configuration.CollectionTypeFactory<Net4CollectionTypeFactory>();
       configuration.AddDeserializedMapping(Mapper.Generate(), "Restbucks");
       return configuration;

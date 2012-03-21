@@ -1,13 +1,19 @@
 ﻿namespace RestBucks
 {
+  using System;
   using System.ComponentModel;
 
   using Bots;
 
   using Castle.Facilities.TypedFactory;
   using Castle.MicroKernel.Resolvers.SpecializedResolvers;
+  using Castle.Windsor;
   using Castle.Windsor.Installer;
 
+  using NHibernate;
+  using NHibernate.Context;
+
+  using Nancy;
   using Nancy.Bootstrappers.Windsor;
 
   public class Bootstrapper : WindsorNancyBootstrapper
@@ -26,6 +32,42 @@
       base.ApplicationStartup(container, pipelines);
 
       container.Resolve<Barista>();
+
+      pipelines.BeforeRequest += c => CreateSession(container);
+      pipelines.AfterRequest += c => CommitSession(container);
+      pipelines.OnError += (c, e) => RollbackSession(container);
     }
+
+    private Response RollbackSession(IWindsorContainer container)
+    {
+      var sessionFactory = container.Resolve<ISessionFactory>();
+      var requestSession = sessionFactory.GetCurrentSession();
+      requestSession.Transaction.Rollback();
+      CurrentSessionContext.Unbind(sessionFactory);
+      requestSession.Dispose();
+
+      return null;
+    }
+
+    private Response CreateSession(IWindsorContainer container)
+    {
+      var sessionFactory = container.Resolve<ISessionFactory>();
+      var requestSession = sessionFactory.OpenSession();
+      CurrentSessionContext.Bind(requestSession);
+      requestSession.BeginTransaction();
+
+      return null;
+    }
+
+    private AfterPipeline CommitSession(IWindsorContainer container)
+    {
+      var sessionFactory = container.Resolve<ISessionFactory>();
+      var requestSession = sessionFactory.GetCurrentSession();
+      requestSession.Transaction.Commit();
+      CurrentSessionContext.Unbind(sessionFactory);
+      requestSession.Dispose();
+
+      return null;
+    }    
   }
 }

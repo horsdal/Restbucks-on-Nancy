@@ -17,7 +17,10 @@
 
     public static string BaseUri(this Request request)
     {
-      return string.Format("{0}://{1}/", request.Url.Scheme, request.Url.BasePath ?? "bogus");
+      var host = request.Url.Port == null
+                   ? request.Url.HostName
+                   : string.Format("{0}:{1}", request.Url.HostName, request.Url.Port);
+      return string.Format("{0}://{1}/", request.Url.Scheme, string.IsNullOrWhiteSpace(host) ? "bogus" : host);
     }
 
   }
