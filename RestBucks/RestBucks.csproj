@@ -85,6 +85,9 @@
     <Reference Include="Nancy.Bootstrappers.Windsor">
       <HintPath>..\packages\Nancy.Bootstrappers.Windsor.0.10.0\lib\net40\Nancy.Bootstrappers.Windsor.dll</HintPath>
     </Reference>
+    <Reference Include="Nancy.Hosting.Aspnet">
+      <HintPath>..\packages\Nancy.Hosting.Aspnet.0.10.0\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
