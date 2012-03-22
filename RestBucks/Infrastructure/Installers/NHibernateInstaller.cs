@@ -8,12 +8,14 @@ namespace RestBucks.Infrastructure.Installers
   using Castle.MicroKernel.SubSystems.Configuration;
   using Castle.Windsor;
 
+  using Data;
+
   using NHibernate;
   using NHibernate.Cfg;
   using NHibernate.Context;
   using NHibernate.Dialect;
 
-  using Data;
+  using RestBucks.Data;
   using SessionManagement;
 
   public class NHibernateInstaller : IWindsorInstaller
@@ -47,7 +49,7 @@ namespace RestBucks.Infrastructure.Installers
                                           db.KeywordsAutoImport = Hbm2DDLKeyWords.AutoQuote;
                                         });
       configuration.CurrentSessionContext<CallSessionContext>();
-      //configuration.CollectionTypeFactory<Net4CollectionTypeFactory>();
+      configuration.CollectionTypeFactory<Net4CollectionTypeFactory>();
       configuration.AddDeserializedMapping(Mapper.Generate(), "Restbucks");
       return configuration;
     }
