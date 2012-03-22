@@ -164,7 +164,6 @@
     <Compile Include="Infrastructure\Installers\RepositoryInstaller.cs" />
     <Compile Include="Infrastructure\Linking\ResourceLinker.cs" />
     <Compile Include="Infrastructure\Responses.cs" />
-    <Compile Include="Infrastructure\WebApi\WindsorResourceFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Orders\OrderResourceHandler.cs" />
     <Compile Include="Resources\MediaTypes.cs" />
