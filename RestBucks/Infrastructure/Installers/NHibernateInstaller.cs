@@ -28,7 +28,7 @@ namespace RestBucks.Infrastructure.Installers
       container.Register(Component.For<IEnumerable<ISessionFactory>>()
                            .UsingFactoryMethod((k, c) => new[] {k.Resolve<ISessionFactory>()}));
 
-      container.Register(Component.For<ISessionFactoryProvider>().AsFactory());
+     // container.Register(Component.For<ISessionFactoryProvider>().AsFactory());
     }
 
     public static ISessionFactory BuildSessionFactory(IKernel kernel)
