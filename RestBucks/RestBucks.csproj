@@ -125,7 +125,6 @@
     <Content Include="docs\order-pay.htm" />
     <Content Include="docs\order-update.htm" />
     <Content Include="docs\receipt-coffee.htm" />
-    <Content Include="Global.asax" />
     <Content Include="styles\main.css" />
     <Content Include="styles\restbucksonnet.png" />
     <Content Include="Web.config" />
@@ -140,9 +139,6 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Bots\Barista.cs" />
     <Compile Include="Domain\BaseClass\IVersionable.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Data\Impl\Repository.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\Mapper.cs" />
