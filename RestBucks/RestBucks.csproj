@@ -152,13 +152,9 @@
     <Compile Include="Infrastructure\BaseAddress.cs" />
     <Compile Include="Infrastructure\Data\Net4Collections.cs" />
     <Compile Include="Infrastructure\Installers\BotInstaller.cs" />
-    <Compile Include="Infrastructure\Installers\ChannelInstaller.cs" />
-    <Compile Include="Infrastructure\Installers\FormatterInstaller.cs" />
     <Compile Include="Infrastructure\InvalidOrderOperationException.cs" />
     <Compile Include="Infrastructure\RequestExtensions.cs" />
     <Compile Include="Infrastructure\UriSegment.cs" />
-    <Compile Include="Infrastructure\WebApi\DelegatingChannelFactory.cs" />
-    <Compile Include="Formatters\JsonMediaTypeFormatter.cs" />
     <Compile Include="Infrastructure\WebApi\RestBucksHttpErrorHandler.cs" />
     <Compile Include="Resources\Orders\TrashHandler.cs" />
     <Compile Include="Resources\Orders\Representations\OrderRepresentationMapper.cs" />
@@ -167,7 +163,6 @@
     <Compile Include="Domain\Product.cs" />
     <Compile Include="Infrastructure\Installers\NHibernateInstaller.cs" />
     <Compile Include="Infrastructure\Installers\RepositoryInstaller.cs" />
-    <Compile Include="Infrastructure\Installers\WebApiInstaller.cs" />
     <Compile Include="Infrastructure\Linking\ResourceLinker.cs" />
     <Compile Include="Infrastructure\SessionManagement\ISessionFactoryProvider.cs" />
     <Compile Include="Infrastructure\SessionManagement\LazySessionContext.cs" />
