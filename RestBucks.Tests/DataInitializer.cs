@@ -2,8 +2,6 @@ namespace RestBucks.Tests
 {
   using System.Linq;
 
-  using log4net.Config;
-
   using NHibernate;
   using NHibernate.Tool.hbm2ddl;
 
@@ -22,7 +20,6 @@ namespace RestBucks.Tests
     [TestFixtureSetUp]
     public void SetUp()
     {
-      XmlConfigurator.Configure();
       var configuration = NHibernateInstaller.CreateConfiguration();
       new SchemaExport(configuration).Execute(true, true, false);
       sessionFactory = configuration.BuildSessionFactory();
