@@ -3,6 +3,7 @@ namespace RestBucks.Tests.Resources
   using NUnit.Framework;
 
   using Nancy;
+  using Nancy.Testing;
 
   using RestBucks.Domain;
   using RestBucks.Resources.Orders.Representations;
@@ -72,21 +73,21 @@ namespace RestBucks.Tests.Resources
       responseToGet.Headers["Location"].Should().Be.EqualTo(expected);
     }
 
-    [Test, Ignore]
+    [Test]
     public void ACallToGetCanceled_ShouldReturnTheOrder()
     {
       // Arrange
-      var order = new Order { Id = 123 };
-      var expectedBody = OrderRepresentationMapper.Map(order, "").ToXmlString();
+      var order = new Order { Id = 123, Status = OrderStatus.Canceled };
+      var expectedBody = OrderRepresentationMapper.Map(order, "http://bogus/").ToXmlString();
+      order.Status = OrderStatus.Unpaid;
       var app = CreateAppProxy(new RepositoryStub<Order>(order));
 
       // Act
       var response = app.Delete("/order/123/");
       var responseToGet = app.Get("/trash/order/123/");
 
-
       responseToGet.StatusCode.Should().Be.EqualTo(HttpStatusCode.OK);
-      responseToGet.Body.ToXmlString().Should().Be.EqualTo(expectedBody);
+      responseToGet.Body.AsString().Should().Be.EqualTo(expectedBody);
     }
   }
 }
