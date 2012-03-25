@@ -1,45 +1,48 @@
-using System;
-using System.Linq;
-using NUnit.Framework;
-using RestBucks.Domain;
-using RestBucks.Resources.Orders.Representations;
-using RestBucks.Tests.Util;
-using SharpTestsEx;
-
-namespace RestBucks.Tests.Representations   
+namespace RestBucks.Tests.Representations
 {
-    [TestFixture]
-    public class OrderRepresentationTests
+  using System;
+  using System.Linq;
+
+  using NUnit.Framework;
+
+  using RestBucks.Domain;
+  using RestBucks.Resources.Orders.Representations;
+  using RestBucks.Tests.Util;
+
+  using SharpTestsEx;
+
+  [TestFixture]
+  public class OrderRepresentationTests
+  {
+    [Test]
+    public void SerializeOrder()
     {
-        [Test]
-        public void SerializeOrder()
-        {
-            var orderRepresentation = new OrderRepresentation
-            {
-                Cost = 100.4m,
-                Location = Location.InShop,
-                Items =
-                                                  {
-                                                      new OrderItemRepresentation
-                                                          {
-                                                              Name = "latte", 
-                                                              Preferences =
-                                                                  {
-                                                                      { "size", "large"} ,
-                                                                      { "milk", "skim" }  
-                                                                  }
-                                                          }
-                                                  }
-            };
+      var orderRepresentation = new OrderRepresentation
+                                {
+                                  Cost = 100.4m,
+                                  Location = Location.InShop,
+                                  Items =
+                                    {
+                                      new OrderItemRepresentation
+                                      {
+                                        Name = "latte",
+                                        Preferences =
+                                          {
+                                            {"size", "large"},
+                                            {"milk", "skim"}
+                                          }
+                                      }
+                                    }
+                                };
 
-            Console.WriteLine(orderRepresentation.ToXmlString());
-        }
+      Assert.DoesNotThrow((() => orderRepresentation.ToXmlString()));
+    }
 
-        [Test]
-        public void CanDeserialize()
-        {
-            var xml =
-                @"<?xml version=""1.0""?>
+    [Test]
+    public void CanDeserialize()
+    {
+      var xml =
+        @"<?xml version=""1.0""?>
 <order xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns=""http://restbuckson.net"">
   <location>inShop</location>
   <cost>100.4</cost>
@@ -52,11 +55,11 @@ namespace RestBucks.Tests.Representations
     </item>
   </items>
 </order>";
-            var representation = XmlUtil.FromXmlString<OrderRepresentation>(xml);
-            representation.Satisfy(r =>
-                                   r.Items.Any(i => i.Name == "latte"
-                                                    && i.Preferences.Any(p => p.Key == "size")
-                                                    && i.Preferences.Any(p => p.Key == "milk")));
-        }
+      var representation = XmlUtil.FromXmlString<OrderRepresentation>(xml);
+      representation.Satisfy(r =>
+                             r.Items.Any(i => i.Name == "latte"
+                                              && i.Preferences.Any(p => p.Key == "size")
+                                              && i.Preferences.Any(p => p.Key == "milk")));
     }
+  }
 }
