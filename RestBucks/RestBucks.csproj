@@ -51,34 +51,7 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ApplicationServer.Common">
-      <HintPath>..\packages\WebApi.Core.0.3.0\lib\40\Microsoft.ApplicationServer.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.ApplicationServer.Http">
-      <HintPath>..\packages\WebApi.Core.0.3.0\lib\40\Microsoft.ApplicationServer.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.ApplicationServer.HttpEnhancements">
-      <HintPath>..\packages\WebApi.Enhancements.0.3.0\lib\40\Microsoft.ApplicationServer.HttpEnhancements.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.ApplicationServer.Serialization">
-      <HintPath>..\packages\WebApi.Core.0.3.0\lib\40\Microsoft.ApplicationServer.Serialization.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.ApplicationServer.ServiceModel">
-      <HintPath>..\packages\WebApi.Core.0.3.0\lib\40\Microsoft.ApplicationServer.ServiceModel.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Net.Http">
-      <HintPath>..\packages\HttpClient.0.3.0\lib\40\Microsoft.Net.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.QueryComposition">
-      <HintPath>..\packages\WebApi.Core.0.3.0\lib\40\Microsoft.QueryComposition.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Runtime.Serialization.Json">
-      <HintPath>..\packages\JsonValue.0.3.0\lib\40\Microsoft.Runtime.Serialization.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.ServiceModel.Web.jQuery">
-      <HintPath>..\packages\JsonValue.0.3.0\lib\40\Microsoft.ServiceModel.Web.jQuery.dll</HintPath>
-    </Reference>
     <Reference Include="Nancy">
       <HintPath>..\packages\Nancy.0.10.0\lib\net40\Nancy.dll</HintPath>
     </Reference>
@@ -87,9 +60,6 @@
     </Reference>
     <Reference Include="Nancy.Hosting.Aspnet">
       <HintPath>..\packages\Nancy.Hosting.Aspnet.0.10.0\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\packages\NHibernate.3.2.0.1002\lib\Net35\NHibernate.dll</HintPath>
