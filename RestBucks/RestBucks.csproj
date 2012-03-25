@@ -154,7 +154,6 @@
     <Compile Include="Infrastructure\InvalidOrderOperationException.cs" />
     <Compile Include="Infrastructure\RequestExtensions.cs" />
     <Compile Include="Infrastructure\UriSegment.cs" />
-    <Compile Include="Infrastructure\WebApi\RestBucksHttpErrorHandler.cs" />
     <Compile Include="Resources\Orders\TrashHandler.cs" />
     <Compile Include="Resources\Orders\Representations\OrderRepresentationMapper.cs" />
     <Compile Include="Resources\Orders\Representations\PaymentRepresentation.cs" />

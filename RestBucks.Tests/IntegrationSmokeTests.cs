@@ -6,6 +6,9 @@
   using Nancy.Testing;
 
   using RestBucks;
+  using RestBucks.Resources.Orders.Representations;
+
+  using Util;
 
   [TestFixture]
   public class IntegrationSmokeTests
@@ -23,6 +26,31 @@
     {
       var app = new Browser(new Bootstrapper());
 
+      var createdResponse = CreatedOrder(app);
+
+      Assert.That(createdResponse.StatusCode, Is.EqualTo(HttpStatusCode.Created));
+      Assert.That(createdResponse.Headers.Keys, Contains.Item("Location"));
+
+      var orderPath = GetOrderPath(createdResponse);
+
+      var getOrderResponse = app.Get(orderPath);
+      Assert.That(getOrderResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK), string.Format("order at {0} not found", orderPath));
+
+      var deletedResponse = app.Delete(orderPath);
+      Assert.That(deletedResponse.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
+
+      var getDeletedOrderResponse = app.Get(orderPath);
+      Assert.That(getDeletedOrderResponse.StatusCode, Is.EqualTo(HttpStatusCode.MovedPermanently));
+    }
+
+    private static string GetOrderPath(BrowserResponse createdResponse)
+    {
+      var orderPath = createdResponse.Headers["Location"].Remove(0, 12);
+      return orderPath;
+    }
+
+    private static BrowserResponse CreatedOrder(Browser app)
+    {
       var createdResponse = app.Post("/orders/",
                                      with =>
                                      {
@@ -39,20 +67,28 @@
                                                  + "    </items>"
                                                  + "</order>");
                                      });
+      return createdResponse;
+    }
 
-      Assert.That(createdResponse.StatusCode, Is.EqualTo(HttpStatusCode.Created));
-      Assert.That(createdResponse.Headers.Keys, Contains.Item("Location"));
+    [Test]
+    public void AppReturnsBadRequestWhenCancelingPaidOrder()
+    {
+      var app = new Browser(new Bootstrapper());
 
-      var orderPath = createdResponse.Headers["Location"].Remove(0, 12);
+      var createdResponse = CreatedOrder(app);
+      var orderPath = GetOrderPath(createdResponse);
 
-      var getOrderResponse = app.Get(orderPath);
-      Assert.That(getOrderResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK), string.Format("order at {0} not found", orderPath));
+      var paymnetResponse = app.Post(orderPath + "/payment/",
+                                     with =>
+                                     {
+                                       with.HttpRequest();
+                                       var xmlString = new PaymentRepresentation {CardNumber = "321", CardOwner = "Jose"}.ToXmlString();
+                                       with.Body(xmlString);
+                                     });
+      Assert.That(paymnetResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-      var deletedResponse = app.Delete(orderPath);
-      Assert.That(deletedResponse.StatusCode, Is.EqualTo(HttpStatusCode.NoContent));
-
-      var getDeletedOrderResponse = app.Get(orderPath);
-      Assert.That(getDeletedOrderResponse.StatusCode, Is.EqualTo(HttpStatusCode.MovedPermanently));
+      var cancelResponse = app.Delete(orderPath);
+      Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
     }
   }
 }

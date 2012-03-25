@@ -10,6 +10,8 @@
   using Castle.Windsor;
   using Castle.Windsor.Installer;
 
+  using Infrastructure;
+
   using NHibernate;
   using NHibernate.Context;
 
@@ -33,9 +35,18 @@
 
       container.Resolve<Barista>();
 
-      pipelines.BeforeRequest += c => CreateSession(container);
-      pipelines.AfterRequest += c => CommitSession(container);
-      pipelines.OnError += (c, e) => RollbackSession(container);
+      pipelines.BeforeRequest += ctx => CreateSession(container);
+      pipelines.AfterRequest += ctx => CommitSession(container);
+      pipelines.OnError += (ctx, ex) => RollbackSession(container);
+      pipelines.OnError += InvalidOrderOperationHandler;
+    }
+
+    private Response InvalidOrderOperationHandler(NancyContext ctx, Exception ex)
+    {
+      if (ex is InvalidOrderOperationException)
+        return ResponseHelpers.BadRequest(null, content: ex.Message);
+      else
+        return null;
     }
 
     private Response RollbackSession(IWindsorContainer container)
