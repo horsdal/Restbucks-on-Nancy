@@ -7,11 +7,11 @@
 <body>
     <h1>
         Get an order by id</h1>
-    <ul>
-        <li><strong>Uri:</strong> order/{id} </li>
-        <li><strong>Method:</strong> GET </li>
-        <li><strong>Example response content</strong>
-            <pre style="overflow: auto">
+  <ul>
+    <li><strong>Uri:</strong> order/{id} </li>
+    <li><strong>Method:</strong> GET </li>
+    <li><strong>Example response content</strong>
+      <pre style="overflow: auto">
 &lt;order&gt;
 &#160;&#160;&#160; &lt;links&gt;
 &#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;link uri=&quot;<a href="http://localhost:13509/order/950272&quot;">http://localhost:13509/order/950272&quot;</a> rel=&quot;<a href="http://localhost:13509/docs/order-get.htm&quot;">http://localhost:13509/docs/order-get.htm&quot;</a> mediaType=&quot;application/vnd.restbucks+xml&quot;/&gt;
@@ -31,7 +31,8 @@
 &#160;&#160;&#160; &lt;/items&gt;
 &#160;&#160;&#160; &lt;status&gt;unpaid&lt;/status&gt;
 &lt;/order&gt;</pre>
-        </li>
-    </ul>
+    </li>
+  </ul>
+  If the request include an "Accept: application/restbuckonnet.vnd+json" header the response will be JSON instead of XML
 </body>
 </html>
