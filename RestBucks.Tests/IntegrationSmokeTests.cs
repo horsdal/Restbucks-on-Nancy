@@ -78,17 +78,40 @@
       var createdResponse = CreatedOrder(app);
       var orderPath = GetOrderPath(createdResponse);
 
-      var paymnetResponse = app.Post(orderPath + "/payment/",
+      var paymentResponse = app.Post(orderPath + "/payment/",
                                      with =>
                                      {
                                        with.HttpRequest();
                                        var xmlString = new PaymentRepresentation {CardNumber = "321", CardOwner = "Jose"}.ToXmlString();
                                        with.Body(xmlString);
                                      });
-      Assert.That(paymnetResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+      Assert.That(paymentResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
       var cancelResponse = app.Delete(orderPath);
       Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+    }
+
+    [Test, Ignore]
+    public void IndexPageIsAvailable()
+    {
+      var app = new Browser(new Bootstrapper());
+
+      var response = app.Get("/");
+
+      Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+      Assert.That(response.Context.Response.ContentType, Is.EqualTo("text/html"));
+      response.Body["title"].ShouldContain("Restbuck API home page");
+    }
+
+    [Test, Ignore]
+    public void DocsAreAvailable()
+    {
+      var app = new Browser(new Bootstrapper());
+
+      var response = app.Get("/docs/order-get.htm/");
+
+      Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+      Assert.That(response.Context.Response.ContentType, Is.EqualTo("text/html"));      
     }
   }
 }

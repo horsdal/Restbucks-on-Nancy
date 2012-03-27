@@ -1,6 +1,7 @@
 ﻿namespace RestBucks
 {
   using System;
+  using System.IO;
 
   using Bots;
 
@@ -16,6 +17,8 @@
 
   using Nancy;
   using Nancy.Bootstrappers.Windsor;
+  using Nancy.Conventions;
+  using Nancy.Responses;
 
   public class Bootstrapper : WindsorNancyBootstrapper
   {
@@ -35,9 +38,26 @@
       container.Resolve<Barista>();
 
       pipelines.BeforeRequest += ctx => CreateSession(container);
+      pipelines.BeforeRequest += ServeIndexPage;
       pipelines.AfterRequest += ctx => CommitSession(container);
       pipelines.OnError += (ctx, ex) => RollbackSession(container);
       pipelines.OnError += InvalidOrderOperationHandler;
+    }
+
+    private Response ServeIndexPage(NancyContext context)
+    {
+      if (context.Request.Url.Path == "/index.htm" || context.Request.Path == "/" )
+        return new GenericFileResponse("index.htm");
+      else
+        return null;
+    }
+
+    protected override void ConfigureConventions(Nancy.Conventions.NancyConventions nancyConventions)
+    {
+      base.ConfigureConventions(nancyConventions);
+
+      nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("docs", "docs"));
+      nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("styles", "styles"));
     }
 
     private Response InvalidOrderOperationHandler(NancyContext ctx, Exception ex)
@@ -51,11 +71,13 @@
     private Response RollbackSession(IWindsorContainer container)
     {
       var sessionFactory = container.Resolve<ISessionFactory>();
-      var requestSession = sessionFactory.GetCurrentSession();
-      requestSession.Transaction.Rollback();
-      CurrentSessionContext.Unbind(sessionFactory);
-      requestSession.Dispose();
-
+      if (CurrentSessionContext.HasBind(sessionFactory))
+      {
+        var requestSession = sessionFactory.GetCurrentSession();
+        requestSession.Transaction.Rollback();
+        CurrentSessionContext.Unbind(sessionFactory);
+        requestSession.Dispose();
+      }
       return null;
     }
 
@@ -72,11 +94,13 @@
     private AfterPipeline CommitSession(IWindsorContainer container)
     {
       var sessionFactory = container.Resolve<ISessionFactory>();
-      var requestSession = sessionFactory.GetCurrentSession();
-      requestSession.Transaction.Commit();
-      CurrentSessionContext.Unbind(sessionFactory);
-      requestSession.Dispose();
-
+      if (CurrentSessionContext.HasBind(sessionFactory))
+      {
+        var requestSession = sessionFactory.GetCurrentSession();
+        requestSession.Transaction.Commit();
+        CurrentSessionContext.Unbind(sessionFactory);
+        requestSession.Dispose();
+      }
       return null;
     }    
   }
