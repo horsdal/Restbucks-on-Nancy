@@ -13,6 +13,7 @@ namespace RestBucks.Tests.Resources
   {
     protected readonly Product latte = new Product
                                      {
+                                       Version = 1,
                                        Name = "latte",
                                        Price = 2.5m,
                                        Customizations =
@@ -28,7 +29,7 @@ namespace RestBucks.Tests.Resources
     public Browser CreateAppProxy(IRepository<Order> orderRepository = null, IRepository<Product> productRepository = null)
     {
       var defaultProductRepository = new RepositoryStub<Product>(
-        latte, new Product {Name = "Other", Price = 3.6m});
+        latte, new Product {Version = 1, Name = "Other", Price = 3.6m});
 
       return new Browser(
         new ConfigurableBootstrapper

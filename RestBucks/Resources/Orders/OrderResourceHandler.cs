@@ -53,7 +53,7 @@ namespace RestBucks.Resources.Orders
         return Response.NotModified();
 
       return Response.AsXml(OrderRepresentationMapper.Map(order, Request.BaseUri()))
-                     .AddCacheHeaders(order);
+                     .WithCacheHeaders(order);
     }
 
     public Response Update(int orderId, OrderRepresentation orderRepresentation)
