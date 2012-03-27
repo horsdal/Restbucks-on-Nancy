@@ -3,7 +3,7 @@
   using NUnit.Framework;
 
   using RestBucks.Domain;
-  using RestBucks.Infrastructure;
+  using Infrastructure;
   using RestBucks.Resources.Orders.Representations;
 
   using SharpTestsEx;

@@ -1,12 +1,10 @@
-﻿using System.Xml.Serialization;
-
-namespace RestBucks.Domain
+﻿namespace RestBucks.Domain
 {
-    public enum Location
-    {
-        [XmlEnum("takeAway")]
-        TakeAway,
-        [XmlEnum("inShop")]
-        InShop
-    }
+  using System.Xml.Serialization;
+
+  public enum Location
+  {
+    [XmlEnum("takeAway")] TakeAway,
+    [XmlEnum("inShop")] InShop
+  }
 }

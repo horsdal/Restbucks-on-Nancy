@@ -1,9 +1,9 @@
-using System.IO;
-using System.Text;
-using System.Xml.Serialization;
-
 namespace RestBucks.Tests.Util
 {
+  using System.IO;
+  using System.Text;
+  using System.Xml.Serialization;
+
   public static class XmlUtil
   {
     public static string ToXmlString<T>(this T input)

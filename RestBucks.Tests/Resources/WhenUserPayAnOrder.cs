@@ -5,7 +5,6 @@ namespace RestBucks.Tests.Resources
   using Nancy;
 
   using RestBucks.Domain;
-  using RestBucks.Resources.Orders;
   using RestBucks.Resources.Orders.Representations;
 
   using Util;

@@ -4,8 +4,6 @@ namespace RestBucks.Infrastructure
   using System.Linq;
   using System.Collections.Generic;
 
-  using Castle.Components.DictionaryAdapter;
-
   using Nancy;
 
   using Domain.BaseClass;

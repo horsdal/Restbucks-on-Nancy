@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using NHibernate;
-using NHibernate.Collection;
-using NHibernate.DebugHelpers;
-using NHibernate.Engine;
-using NHibernate.Loader;
-using NHibernate.Persister.Collection;
-using NHibernate.Type;
-using NHibernate.Util;
-
-namespace RestBucks.Infrastructure.Data
+﻿namespace RestBucks.Infrastructure.Data
 {
+  using System;
+  using System.Collections;
+  using System.Collections.Generic;
+  using System.Data;
+  using System.Diagnostics;
+  using System.Linq;
+
+  using NHibernate;
+  using NHibernate.Collection;
+  using NHibernate.DebugHelpers;
+  using NHibernate.Engine;
+  using NHibernate.Loader;
+  using NHibernate.Persister.Collection;
+  using NHibernate.Type;
+  using NHibernate.Util;
+
   //add to your configuration:
   //configuration.Properties[Environment.CollectionTypeFactoryClass]
   //		= typeof(Net4CollectionTypeFactory).AssemblyQualifiedName;
@@ -50,10 +51,7 @@ namespace RestBucks.Infrastructure.Data
 
     public IComparer<T> Comparer
     {
-      get
-      {
-        return this.comparer;
-      }
+      get { return this.comparer; }
     }
   }
 
@@ -79,7 +77,7 @@ namespace RestBucks.Infrastructure.Data
 
     public override Type ReturnedClass
     {
-      get { return typeof(ISet<T>); }
+      get { return typeof (ISet<T>); }
     }
 
     /// <summary>
@@ -125,7 +123,7 @@ namespace RestBucks.Infrastructure.Data
   /// A persistent wrapper for an <see cref="ISet{T}"/>
   /// </summary>
   [Serializable]
-  [DebuggerTypeProxy(typeof(CollectionProxy<>))]
+  [DebuggerTypeProxy(typeof (CollectionProxy<>))]
   public class PersistentGenericSet<T> : AbstractPersistentCollection, ISet<T>
   {
     /// <summary>
@@ -142,8 +140,7 @@ namespace RestBucks.Infrastructure.Data
     /// have its' <c>GetHashCode()</c> and <c>Equals()</c> methods called during the load
     /// process.
     /// </remarks>
-    [NonSerialized]
-    private IList<T> tempList;
+    [NonSerialized] private IList<T> tempList;
 
     public PersistentGenericSet()
     {
@@ -203,8 +200,6 @@ namespace RestBucks.Infrastructure.Data
     {
       get { return false; }
     }
-
-    #region ISet<T> Members
 
     IEnumerator<T> IEnumerable<T>.GetEnumerator()
     {
@@ -370,12 +365,6 @@ namespace RestBucks.Infrastructure.Data
       return set.GetEnumerator();
     }
 
-    #endregion
-
-    #region DelayedOperations
-
-    #region Nested type: ClearDelayedOperation
-
     protected sealed class ClearDelayedOperation : IDelayedOperation
     {
       private readonly PersistentGenericSet<T> enclosingInstance;
@@ -384,8 +373,6 @@ namespace RestBucks.Infrastructure.Data
       {
         this.enclosingInstance = enclosingInstance;
       }
-
-      #region IDelayedOperation Members
 
       public object AddedInstance
       {
@@ -401,13 +388,7 @@ namespace RestBucks.Infrastructure.Data
       {
         enclosingInstance.set.Clear();
       }
-
-      #endregion
     }
-
-    #endregion
-
-    #region Nested type: SimpleAddDelayedOperation
 
     protected sealed class SimpleAddDelayedOperation : IDelayedOperation
     {
@@ -419,8 +400,6 @@ namespace RestBucks.Infrastructure.Data
         this.enclosingInstance = enclosingInstance;
         this.value = value;
       }
-
-      #region IDelayedOperation Members
 
       public object AddedInstance
       {
@@ -436,13 +415,7 @@ namespace RestBucks.Infrastructure.Data
       {
         enclosingInstance.set.Add(value);
       }
-
-      #endregion
     }
-
-    #endregion
-
-    #region Nested type: SimpleRemoveDelayedOperation
 
     protected sealed class SimpleRemoveDelayedOperation : IDelayedOperation
     {
@@ -454,8 +427,6 @@ namespace RestBucks.Infrastructure.Data
         this.enclosingInstance = enclosingInstance;
         this.value = value;
       }
-
-      #region IDelayedOperation Members
 
       public object AddedInstance
       {
@@ -471,13 +442,7 @@ namespace RestBucks.Infrastructure.Data
       {
         enclosingInstance.set.Remove(value);
       }
-
-      #endregion
     }
-
-    #endregion
-
-    #endregion
 
     public override ICollection GetSnapshot(ICollectionPersister persister)
     {
@@ -494,17 +459,17 @@ namespace RestBucks.Infrastructure.Data
 
     public override ICollection GetOrphans(object snapshot, string entityName)
     {
-      var sn = new SetSnapShot<object>((IEnumerable<object>)snapshot);
+      var sn = new SetSnapShot<object>((IEnumerable<object>) snapshot);
       if (set.Count == 0) return sn;
-      if (((ICollection)sn).Count == 0) return sn;
+      if (((ICollection) sn).Count == 0) return sn;
       return GetOrphans(sn, set.ToArray(), entityName, Session);
     }
 
     public override bool EqualsSnapshot(ICollectionPersister persister)
     {
       var elementType = persister.ElementType;
-      var snapshot = (ISetSnapshot<object>)GetSnapshot();
-      if (((ICollection)snapshot).Count != set.Count)
+      var snapshot = (ISetSnapshot<object>) GetSnapshot();
+      if (((ICollection) snapshot).Count != set.Count)
       {
         return false;
       }
@@ -517,12 +482,12 @@ namespace RestBucks.Infrastructure.Data
 
     public override bool IsSnapshotEmpty(object snapshot)
     {
-      return ((ICollection)snapshot).Count == 0;
+      return ((ICollection) snapshot).Count == 0;
     }
 
     public override void BeforeInitialize(ICollectionPersister persister, int anticipatedSize)
     {
-      set = (ISet<T>)persister.CollectionType.Instantiate(anticipatedSize);
+      set = (ISet<T>) persister.CollectionType.Instantiate(anticipatedSize);
     }
 
     /// <summary>
@@ -533,12 +498,12 @@ namespace RestBucks.Infrastructure.Data
     /// <param name="owner">The owner object.</param>
     public override void InitializeFromCache(ICollectionPersister persister, object disassembled, object owner)
     {
-      var array = (object[])disassembled;
+      var array = (object[]) disassembled;
       int size = array.Length;
       BeforeInitialize(persister, size);
       for (int i = 0; i < size; i++)
       {
-        var element = (T)persister.ElementType.Assemble(array[i], Session, owner);
+        var element = (T) persister.ElementType.Assemble(array[i], Session, owner);
         if (element != null)
         {
           set.Add(element);
@@ -553,9 +518,10 @@ namespace RestBucks.Infrastructure.Data
       return StringHelper.CollectionToString(set.ToArray());
     }
 
-    public override object ReadFrom(IDataReader rs, ICollectionPersister role, ICollectionAliases descriptor, object owner)
+    public override object ReadFrom(IDataReader rs, ICollectionPersister role, ICollectionAliases descriptor,
+                                    object owner)
     {
-      var element = (T)role.ReadElement(rs, owner, descriptor.SuffixedElementAliases, Session);
+      var element = (T) role.ReadElement(rs, owner, descriptor.SuffixedElementAliases, Session);
       if (element != null)
       {
         tempList.Add(element);
@@ -609,8 +575,8 @@ namespace RestBucks.Infrastructure.Data
     public override IEnumerable GetDeletes(ICollectionPersister persister, bool indexIsFormula)
     {
       IType elementType = persister.ElementType;
-      var sn = (ISetSnapshot<T>)GetSnapshot();
-      var deletes = new List<T>(((ICollection<T>)sn).Count);
+      var sn = (ISetSnapshot<T>) GetSnapshot();
+      var deletes = new List<T>(((ICollection<T>) sn).Count);
 
       deletes.AddRange(sn.Where(obj => !set.Contains(obj)));
 
@@ -624,7 +590,7 @@ namespace RestBucks.Infrastructure.Data
 
     public override bool NeedsInserting(object entry, int i, IType elemType)
     {
-      var sn = (ISetSnapshot<object>)GetSnapshot();
+      var sn = (ISetSnapshot<object>) GetSnapshot();
       object oldKey = sn[entry];
       // note that it might be better to iterate the snapshot but this is safe,
       // assuming the user implements equals() properly, as required by the PersistentSet
@@ -691,16 +657,10 @@ namespace RestBucks.Infrastructure.Data
       Array.Copy(set.ToArray(), 0, array, index, Count);
     }
 
-    #region Nested type: ISetSnapshot
-
     private interface ISetSnapshot<T> : ICollection<T>, ICollection
     {
       T this[T element] { get; }
     }
-
-    #endregion
-
-    #region Nested type: SetSnapShot
 
     [Serializable]
     private class SetSnapShot<T> : ISetSnapshot<T>
@@ -721,8 +681,6 @@ namespace RestBucks.Infrastructure.Data
       {
         elements = new List<T>(collection);
       }
-
-      #region ISetSnapshot<T> Members
 
       public IEnumerator<T> GetEnumerator()
       {
@@ -761,7 +719,7 @@ namespace RestBucks.Infrastructure.Data
 
       public void CopyTo(Array array, int index)
       {
-        ((ICollection)elements).CopyTo(array, index);
+        ((ICollection) elements).CopyTo(array, index);
       }
 
       int ICollection.Count
@@ -771,12 +729,12 @@ namespace RestBucks.Infrastructure.Data
 
       public object SyncRoot
       {
-        get { return ((ICollection)elements).SyncRoot; }
+        get { return ((ICollection) elements).SyncRoot; }
       }
 
       public bool IsSynchronized
       {
-        get { return ((ICollection)elements).IsSynchronized; }
+        get { return ((ICollection) elements).IsSynchronized; }
       }
 
       int ICollection<T>.Count
@@ -786,7 +744,7 @@ namespace RestBucks.Infrastructure.Data
 
       public bool IsReadOnly
       {
-        get { return ((ICollection<T>)elements).IsReadOnly; }
+        get { return ((ICollection<T>) elements).IsReadOnly; }
       }
 
       public T this[T element]
@@ -801,10 +759,6 @@ namespace RestBucks.Infrastructure.Data
           return default(T);
         }
       }
-
-      #endregion
     }
-
-    #endregion
   }
 }

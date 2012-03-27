@@ -1,4 +1,3 @@
-
 namespace RestBucks.Resources.Orders
 {
   using System.IO;

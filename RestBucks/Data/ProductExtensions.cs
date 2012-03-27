@@ -1,14 +1,15 @@
-using System.Linq;
-using RestBucks.Domain;
-
 namespace RestBucks.Data
 {
-    public static class ProductExtensions
+  using System.Linq;
+
+  using Domain;
+
+  public static class ProductExtensions
+  {
+    public static Product GetByName(this IRepository<Product> products, string name)
     {
-        public static Product GetByName(this IRepository<Product> products, string name)
-        {
-            return products.Retrieve(p => p.Name.ToLower() == name.ToLower())
-                                               .FirstOrDefault();
-        }
+      return products.Retrieve(p => p.Name.ToLower() == name.ToLower())
+        .FirstOrDefault();
     }
+  }
 }
