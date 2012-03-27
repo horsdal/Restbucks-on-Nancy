@@ -1,11 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using RestBucks.Domain.BaseClass;
-using RestBucks.Infrastructure;
-
 namespace RestBucks.Domain
 {
+  using System;
+  using System.Collections.Generic;
+  using System.Linq;
+
+  using BaseClass;
+
+  using Infrastructure;
+
   public class Payment : EntityBase
   {
     public virtual string CreditCardNumber { get; set; }
@@ -42,8 +44,8 @@ namespace RestBucks.Domain
       if (Items.Count() == 0) yield return "The order must include at least one item.";
 
       var itemsErrors = Items.SelectMany(
-        (i, index) => 
-          i.GetErrorMessages().Select(m => string.Format("Item {0}: {1}", index, m)));
+        (i, index) =>
+        i.GetErrorMessages().Select(m => string.Format("Item {0}: {1}", index, m)));
 
       foreach (var itemsError in itemsErrors)
       {
@@ -73,6 +75,7 @@ namespace RestBucks.Domain
       }
       CancelReason = cancelReason;
       Status = OrderStatus.Canceled;
+      Version++;
     }
 
     public virtual void Pay(string cardNumber, string cardOwner)
@@ -84,6 +87,7 @@ namespace RestBucks.Domain
       }
       Status = OrderStatus.Paid;
       Payment = new Payment {CardOwner = cardOwner, CreditCardNumber = cardNumber};
+      Version++;
     }
 
     public virtual void Finish()
@@ -94,6 +98,7 @@ namespace RestBucks.Domain
                                                                Status.ToString().ToLower()));
       }
       Status = OrderStatus.Ready;
+      Version++;
     }
   }
 }
