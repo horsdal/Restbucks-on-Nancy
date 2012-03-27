@@ -13,6 +13,7 @@ To run this sample on your local box follow these steps:
   * Run the test in RestBucks.Tests.DataInitializer, named InitializeData; this will create the database schema and populate some data.
 
 If you want to run the full suite of tests, you need to follow these two additional steps:
+ 
   * Create another empty database
   * Modify the connection string named “Restbucks_Tests” in the App.Config (test project) to point to the database that you just created.
  
