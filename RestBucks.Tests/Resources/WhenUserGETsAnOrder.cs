@@ -91,5 +91,51 @@ namespace RestBucks.Tests.Resources
         .Single(e => e.Name.LocalName == "location")
         .Value.Should().Be.EqualTo("takeAway");
     }
+
+    [Test]
+    public void WithRestbuckJsonAcceptHeaderResponseIsJson()
+    {
+      // Arrange
+      var order = new Order { Id = 123, Location = Location.TakeAway };
+      order.AddItem(new OrderItem(latte, 1, 1, new Dictionary<string, string>()));
+      var orderRepo = new RepositoryStub<Order>(order);
+
+      var app = CreateAppProxy(orderRepo);
+
+      // Act
+      var result = app.Get("/order/123/",
+                           with =>
+                           {
+                             with.HttpRequest();
+                             with.Header("Accept", "application/vnd.restbucks+json");
+                           });
+
+      // Assert
+      Assert.That(result.Context.Response.ContentType, Is.EqualTo("application/json"));
+    }
+
+    [Test]
+    public void WithApplicationXmlAcceptHeaderResponseIsXml()
+    {
+      // Arrange
+      var order = new Order { Id = 123, Location = Location.TakeAway };
+      order.AddItem(new OrderItem(latte, 1, 1, new Dictionary<string, string>()));
+      var orderRepo = new RepositoryStub<Order>(order);
+
+      var app = CreateAppProxy(orderRepo);
+
+      // Act
+      var result = app.Get("/order/123/",
+                           with =>
+                           {
+                             with.HttpRequest();
+                             with.Header("Accept", "application/xml");
+                           });
+
+      // Assert
+      Assert.That(result.Context.Response.ContentType, Is.EqualTo("application/xml"));
+    }
+
+
   }
 }

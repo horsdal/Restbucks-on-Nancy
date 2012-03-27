@@ -126,7 +126,7 @@
     }
 
     [Test]
-    public void WhenOrderHasChanged_ThenReturn200()
+    public void WhenMenuHasChanged_ThenReturn200()
     {
       // Arrange
       var app = CreateAppProxy();
@@ -137,7 +137,7 @@
                 with =>
                 {
                   with.HttpRequest();
-                  with.Header("If-None-Match", "\"1\"");
+                  with.Header("If-None-Match", "\"0\"");
                 });
 
       // Assert

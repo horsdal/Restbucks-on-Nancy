@@ -52,7 +52,7 @@ namespace RestBucks.Resources.Orders
       if (Request.IsNotModified(order)) 
         return Response.NotModified();
 
-      return Response.AsXml(OrderRepresentationMapper.Map(order, Request.BaseUri()))
+      return Response.WithContent(Request.Headers.Accept, OrderRepresentationMapper.Map(order, Request.BaseUri()))
                      .WithCacheHeaders(order);
     }
 

@@ -14,6 +14,7 @@
   public class MenuResourceHandler : NancyModule
   {
     private readonly IRepository<Product> productRepository;
+    private static readonly TimeSpan menuMaxAge = TimeSpan.FromHours(6);
 
     public MenuResourceHandler(IRepository<Product> productRepository) : base("menu")
     {
@@ -27,10 +28,11 @@
       var products = productRepository.RetrieveAll().OrderBy(p => p.Name).ToList();
       var menuRepresentation = CreateMenuRepresentation(products);
 
-      return
-        Response
-        .WithContent(Request.Headers.Accept, menuRepresentation)
-        .WithCacheHeaders(products.First(), TimeSpan.FromHours(6));
+      if (Request.IsNotModified(products.First()))
+        return Response.NotModified(menuMaxAge);
+      else
+        return Response.WithContent(Request.Headers.Accept, menuRepresentation)
+                       .WithCacheHeaders(products.First(), menuMaxAge);
     }
 
     private static MenuRepresentation CreateMenuRepresentation(List<Product> products)
