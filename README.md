@@ -1,9 +1,9 @@
-{ What? }
+# What? #
 This a REST application inspired in the excellent example of the book Rest in Practice.
 
 It is based on the Restbucks on .NET sample, but uses Nancy, where the original sample uese WebAPI.
 
-{ How? }
+# How? #
 To run this sample on your local box follow these steps:
 
   * Clone the codeplex repository with mercurial
