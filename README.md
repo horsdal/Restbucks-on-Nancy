@@ -1,12 +1,12 @@
 # What? #
 This a REST application inspired in the excellent example of the book [Rest in Practice] [1].
 
-It is based on the [Restbucks on .NET sample] [2], but uses Nancy, where the original sample uese WebAPI.
+It is based on the [Restbucks on .NET sample] [2], but uses [Nancy] [3], where the original sample uese WebAPI.
 
 # How? #
 To run this sample on your local box follow these steps:
 
-  * Clone the codeplex repository with mercurial
+  * Fork or clone this repository
   * Create an empty database in a Sql Server instance
   * Open the Visual Studio solution
   * Edit the connection string named “Restbucks” in the Web.Config (web project) and App.config (test project) files.
@@ -19,3 +19,4 @@ If you want to run the full suite of tests, you need to follow these two additio
 
   [1]:http://restinpractice.com/default.aspx
   [2]:http://restbucks.codeplex.com/
+  [3]:http://nancyfx.org/
