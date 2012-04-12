@@ -22,7 +22,7 @@
 
   public class Bootstrapper : WindsorNancyBootstrapper
   {
-    protected override void ConfigureApplicationContainer(Castle.Windsor.IWindsorContainer existingContainer)
+    protected override void ConfigureApplicationContainer(IWindsorContainer existingContainer)
     {
       base.ConfigureApplicationContainer(existingContainer);
 
@@ -31,7 +31,7 @@
       existingContainer.Install(FromAssembly.This());
     }
 
-    protected override void ApplicationStartup(Castle.Windsor.IWindsorContainer container, Nancy.Bootstrapper.IPipelines pipelines)
+    protected override void ApplicationStartup(IWindsorContainer container, Nancy.Bootstrapper.IPipelines pipelines)
     {
       base.ApplicationStartup(container, pipelines);
 
@@ -52,7 +52,7 @@
         return null;
     }
 
-    protected override void ConfigureConventions(Nancy.Conventions.NancyConventions nancyConventions)
+    protected override void ConfigureConventions(NancyConventions nancyConventions)
     {
       base.ConfigureConventions(nancyConventions);
 
