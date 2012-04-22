@@ -1,7 +1,7 @@
 # What? #
 This a REST application inspired in the excellent example of the book [Rest in Practice] [1].
 
-It is based on the [Restbucks on .NET sample] [2], but uses [Nancy] [3], where the original sample uese WebAPI.
+It is based on the [Restbucks on .NET sample] [2], but uses [Nancy] [3], where the original sample uses WebAPI.
 
 # How? #
 To run this sample on your local box follow these steps:
