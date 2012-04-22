@@ -82,13 +82,24 @@
                                      with =>
                                      {
                                        with.HttpRequest();
-                                       var xmlString = new PaymentRepresentation {CardNumber = "321", CardOwner = "Jose"}.ToXmlString();
+                                       var xmlString = new PaymentRepresentation { CardNumber = "321", CardOwner = "Jose" }.ToXmlString();
                                        with.Body(xmlString);
                                      });
       Assert.That(paymentResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
       var cancelResponse = app.Delete(orderPath);
       Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+    }
+
+    [Test]
+    public void DiagnosticsPageIsAvailable()
+    {
+      var app = new Browser(new Bootstrapper());
+
+      var response = app.Get("/_Nancy/");
+
+      Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+      response.Body["h1"].ShouldContain("Login");
     }
   }
 }

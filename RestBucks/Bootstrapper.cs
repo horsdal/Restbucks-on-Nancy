@@ -19,9 +19,18 @@
   using Nancy.Bootstrappers.Windsor;
   using Nancy.Conventions;
   using Nancy.Responses;
+  using Nancy.Diagnostics;
 
   public class Bootstrapper : WindsorNancyBootstrapper
   {
+    protected override DiagnosticsConfiguration DiagnosticsConfiguration
+    {
+      get
+      {
+        return new DiagnosticsConfiguration { Password = "RestBucksOnNancy" };
+      }
+    }
+
     protected override void ConfigureApplicationContainer(IWindsorContainer existingContainer)
     {
       base.ConfigureApplicationContainer(existingContainer);
