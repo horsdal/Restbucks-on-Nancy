@@ -1,7 +1,6 @@
 ﻿namespace RestBucks
 {
   using System;
-  using System.IO;
 
   using Bots;
 
