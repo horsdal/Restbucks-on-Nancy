@@ -64,7 +64,12 @@ namespace RestBucks.Tests.Resources
       var app = CreateAppProxy();
 
       // Act
-      var response = app.Get("/order/123");
+      var response = app.Get("/order/123",
+                             with =>
+                             {
+                               with.HttpRequest();
+                               with.Header("Accept", "application/xml");
+                             });
 
       //Assert
       response.StatusCode.Should().Be.EqualTo(HttpStatusCode.NotFound);
@@ -81,7 +86,12 @@ namespace RestBucks.Tests.Resources
       var app = CreateAppProxy(orderRepo);
 
       //Act
-      var response = app.Get("/order/123/");
+      var response = app.Get("/order/123/",
+                             with =>
+                             {
+                               with.HttpRequest();
+                               with.Header("Accept", "application/xml");
+                             });
 
       // Assert
       response.StatusCode.Should().Be.EqualTo(HttpStatusCode.OK);
@@ -132,9 +142,7 @@ namespace RestBucks.Tests.Resources
                            });
 
       // Assert
-      Assert.That(result.Context.Response.ContentType, Is.EqualTo("application/xml"));
+      Assert.That(result.Context.Response.ContentType, Is.EqualTo("application/vnd.restbucks+xml"));
     }
-
-
   }
 }

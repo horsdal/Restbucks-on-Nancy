@@ -1,4 +1,6 @@
-﻿namespace RestBucks.Resources.Products
+﻿using Nancy.Responses;
+
+namespace RestBucks.Resources.Products
 {
   using System;
   using System.Collections.Generic;
@@ -23,7 +25,7 @@
       Get["/"] = _ => GetHandler();
     }
 
-    private Response GetHandler()
+    private Object GetHandler()
     {
       var products = productRepository.RetrieveAll().OrderBy(p => p.Name).ToList();
       var menuRepresentation = CreateMenuRepresentation(products);
@@ -31,8 +33,10 @@
       if (Request.IsNotModified(products.First()))
         return Response.NotModified(menuMaxAge);
       else
-        return Response.WithContent(Request.Headers.Accept, menuRepresentation)
-                       .WithCacheHeaders(products.First(), menuMaxAge);
+        return
+          Negotiate
+          .WithModel(menuRepresentation)
+          .WithCacheHeaders(products.First(), UntilMidnight());
     }
 
     private static MenuRepresentation CreateMenuRepresentation(List<Product> products)
@@ -42,6 +46,11 @@
         .ToArray();
 
       return new MenuRepresentation {Items = itemRepresentations};
+    }
+
+    private static TimeSpan UntilMidnight()
+    {
+      return DateTime.UtcNow.Date.AddDays(1).Subtract(DateTime.UtcNow);
     }
   }
 }

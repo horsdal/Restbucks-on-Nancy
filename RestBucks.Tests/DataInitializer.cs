@@ -12,7 +12,8 @@ namespace RestBucks.Tests
 
   using Infrastructure.Installers;
 
-  [TestFixture, Ignore("This not really a test, but a utility for creating and populating the RestBucks DB")]
+  [TestFixture]
+  [Ignore("This not really a test, but a utility for creating and populating the RestBucks DB")]
   public class DataInitializer
   {
     private ISessionFactory sessionFactory;

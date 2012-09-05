@@ -28,9 +28,9 @@ namespace RestBucks.Tests.Resources
     public void WhenAProductDoesNotExist_ThenReturn400AndTheProperREasonPhrase()
     {
       var appProxy = CreateAppProxy();
-      var orderRepresentation = new OrderRepresentation
+      var orderRepresentation = new OrderRepresentation()
                                 {
-                                  Items = {new OrderItemRepresentation {Name = "beer"}}
+                                  Items = {new OrderItemRepresentation() {Name = "beer"}}
                                 };
 
       var result =
@@ -50,9 +50,9 @@ namespace RestBucks.Tests.Resources
     public void WhenItemHasQuantity0_ThenReturn400AndTheProperREasonPhrase()
     {
       var appProxy = CreateAppProxy();
-      var orderRepresentation = new OrderRepresentation
+      var orderRepresentation = new OrderRepresentation()
                                 {
-                                  Items = {new OrderItemRepresentation {Name = "latte", Quantity = 0}}
+                                  Items = {new OrderItemRepresentation() {Name = "latte", Quantity = 0}}
                                 };
       
       // act
@@ -75,8 +75,7 @@ namespace RestBucks.Tests.Resources
     {
       var orderRepository = new RepositoryStub<Order>();
       var appProxy = CreateAppProxy(orderRepository);
-      var orderRepresentation = new OrderRepresentation
-                                {Items = {new OrderItemRepresentation {Name = "latte", Quantity = 1}}};
+      var orderRepresentation = new OrderRepresentation() {Items = {new OrderItemRepresentation() {Name = "latte", Quantity = 1}}};
 
       //act
       appProxy.Post("/orders/",
@@ -96,8 +95,7 @@ namespace RestBucks.Tests.Resources
     {
       var orderRepository = new RepositoryStub<Order>();
       var appProxy = CreateAppProxy(orderRepository);
-      var orderRepresentation = new OrderRepresentation
-                                {Items = {new OrderItemRepresentation {Name = "latte", Quantity = 1}}};
+      var orderRepresentation = new OrderRepresentation() {Items = {new OrderItemRepresentation() {Name = "latte", Quantity = 1}}};
 
       //act
       var result = appProxy.Post("/orders/",
@@ -116,10 +114,10 @@ namespace RestBucks.Tests.Resources
     {
       var orderRepository = new RepositoryStub<Order>();
       var appProxy = CreateAppProxy(orderRepository);
-      var orderRepresentation = new OrderRepresentation
+      var orderRepresentation = new OrderRepresentation()
                                 {
                                   Location = Location.InShop,
-                                  Items = {new OrderItemRepresentation {Name = "latte", Quantity = 1}}
+                                  Items = {new OrderItemRepresentation() {Name = "latte", Quantity = 1}}
                                 };
 
       //act
@@ -146,9 +144,9 @@ namespace RestBucks.Tests.Resources
         resourceLinker.BuildUriString("/order/", OrderResourceHandler.SlashOrderId,new { orderId = "123" });
 
       var appProxy = CreateAppProxy(orderRepository.Object);
-      var orderRepresentation = new OrderRepresentation
+      var orderRepresentation = new OrderRepresentation()
                                 {
-                                  Items = {new OrderItemRepresentation {Name = "latte", Quantity = 1}}
+                                  Items = {new OrderItemRepresentation() {Name = "latte", Quantity = 1}}
                                 };
       // act
       var result = appProxy.Post("/orders/",

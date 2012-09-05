@@ -34,7 +34,7 @@ namespace RestBucks.Infrastructure.Installers
       return configuration.BuildSessionFactory();
     }
 
-    public static Configuration CreateConfiguration(string connectionStringName = "RestBucks")
+    public static Configuration CreateConfiguration(string connectionStringName = "Restbucks")
     {
       var configuration = new Configuration();
 

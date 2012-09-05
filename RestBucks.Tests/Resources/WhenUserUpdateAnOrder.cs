@@ -43,7 +43,7 @@ namespace RestBucks.Tests.Resources
                               with =>
                               {
                                 with.HttpRequest();
-                                with.Body(new OrderRepresentation {Location = Location.TakeAway}.ToXmlString());
+                                with.Body(new OrderRepresentation() {Location = Location.TakeAway}.ToXmlString());
                               });
 
       // Assert

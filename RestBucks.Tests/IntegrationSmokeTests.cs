@@ -91,7 +91,7 @@
       Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
     }
 
-    [Test]
+    [Test, Ignore]
     public void DiagnosticsPageIsAvailable()
     {
       var app = new Browser(new Bootstrapper());

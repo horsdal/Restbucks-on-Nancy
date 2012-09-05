@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -14,6 +15,17 @@
     <AssemblyName>RestBucks</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <UseIISExpress>false</UseIISExpress>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,29 +46,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+    <Reference Include="Castle.Core, Version=3.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Castle.Core.3.0.0.4001\lib\net40-client\Castle.Core.dll</HintPath>
+      <HintPath>..\packages\Castle.Core.3.1.0\lib\net40-client\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Windsor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+    <Reference Include="Castle.Windsor, Version=3.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Castle.Windsor.3.0.0.4001\lib\net40\Castle.Windsor.dll</HintPath>
+      <HintPath>..\packages\Castle.Windsor.3.1.0\lib\net40\Castle.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.3.2.0.1002\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Nancy, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Nancy, Version=0.12.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Nancy.0.11.0\lib\net40\Nancy.dll</HintPath>
+      <HintPath>..\packages\Nancy.0.12.0\lib\net40\Nancy.dll</HintPath>
     </Reference>
-    <Reference Include="Nancy.Bootstrappers.Windsor, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Nancy.Bootstrappers.Windsor, Version=0.12.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Nancy.Bootstrappers.Windsor.0.11.0\lib\net40\Nancy.Bootstrappers.Windsor.dll</HintPath>
+      <HintPath>..\packages\Nancy.Bootstrappers.Windsor.0.12.0\lib\net40\Nancy.Bootstrappers.Windsor.dll</HintPath>
     </Reference>
-    <Reference Include="Nancy.Hosting.Aspnet, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Nancy.Hosting.Aspnet, Version=0.12.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Nancy.Hosting.Aspnet.0.11.0\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
+      <HintPath>..\packages\Nancy.Hosting.Aspnet.0.12.0\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\packages\NHibernate.3.2.0.1002\lib\Net35\NHibernate.dll</HintPath>
@@ -74,9 +86,14 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
+    <Reference Include="YamlSerializer">
+      <HintPath>..\packages\YamlSerializer.1.0\lib\Net35\YamlSerializer.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="index.htm" />
+    <Content Include="index.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="docs\order-cancel.htm" />
     <Content Include="docs\order-create.htm" />
     <Content Include="docs\order-get.htm" />
@@ -107,11 +124,13 @@
     <Compile Include="Domain\Location.cs" />
     <Compile Include="Domain\Order.cs" />
     <Compile Include="Domain\OrderItem.cs" />
+    <Compile Include="Infrastructure\YammlResponseProcessor.cs" />
     <Compile Include="Infrastructure\Data\Net4Collections.cs" />
     <Compile Include="Infrastructure\Installers\BotInstaller.cs" />
     <Compile Include="Infrastructure\InvalidOrderOperationException.cs" />
     <Compile Include="Infrastructure\RequestExtensions.cs" />
     <Compile Include="Infrastructure\UriSegment.cs" />
+    <Compile Include="Infrastructure\XmlResponseProcessor.cs" />
     <Compile Include="Resources\Orders\TrashHandler.cs" />
     <Compile Include="Resources\Orders\Representations\OrderRepresentationMapper.cs" />
     <Compile Include="Resources\Orders\Representations\PaymentRepresentation.cs" />
@@ -143,8 +162,13 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
@@ -163,6 +187,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

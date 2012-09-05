@@ -12,17 +12,8 @@
   {
     public static OrderRepresentation Map(Order order, string baseAddress)
     {
-      return new OrderRepresentation
+      return new OrderRepresentation(order)
              {
-               Cost = order.Total,
-               Status = order.Status,
-               Location = order.Location,
-               Items = order.Items.Select(i => new OrderItemRepresentation
-                                               {
-                                                 Name = i.Product.Name,
-                                                 Preferences = i.Preferences.ToDictionary(p => p.Key, p => p.Value),
-                                                 Quantity = i.Quantity
-                                               }).ToList(),
                Links = GetLinks(order, baseAddress).ToList()
              };
 

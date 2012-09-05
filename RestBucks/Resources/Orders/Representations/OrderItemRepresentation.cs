@@ -6,12 +6,16 @@
   using System.Xml.Linq;
   using System.Xml.Schema;
   using System.Xml.Serialization;
+  using Domain;
 
   public class OrderItemRepresentation : IXmlSerializable
   {
-    public OrderItemRepresentation()
+    public OrderItemRepresentation() { Preferences = new Dictionary<string, string>(); }
+
+    public OrderItemRepresentation(OrderItem item) : this()
     {
-      Preferences = new Dictionary<string, string>();
+      Name = item.Product.Name;
+      Quantity = item.Quantity;
     }
 
     public string Name { get; set; }

@@ -21,7 +21,13 @@
     public void ResponseContainsAllProducts([Values("latte", "Other")] string productName)
     {
       var app = CreateAppProxy();
-      var result = app.Get("/menu/").BodyAsXml();
+      var res = app.Get("/menu/",
+                        with =>
+                        {
+                          with.HttpRequest();
+                          with.Header("Accept", "application/xml");
+                        });
+      var result = res.BodyAsXml();
 
       var itemsInResponse = result.Element("menu").Elements("item");
 
@@ -35,7 +41,12 @@
     public void ResponseContainsPrice()
     {
       var app = CreateAppProxy();
-      var result = app.Get("/menu/").BodyAsXml();
+      var result = app.Get("/menu/",
+                        with =>
+                        {
+                          with.HttpRequest();
+                          with.Header("Accept", "application/vnd.restbucks+xml");
+                        }).BodyAsXml();
 
       var itemsInResponse = result.Element("menu").Elements("item");
 
@@ -103,7 +114,22 @@
                              with.Header("Accept", "application/xml");
                            });
 
-      Assert.That(result.Context.Response.ContentType, Is.EqualTo("application/xml"));
+      Assert.That(result.Context.Response.ContentType, Is.EqualTo("application/vnd.restbucks+xml"));
+    }
+
+    [Test]
+    public void WithApplicationYamlAcceptHeaderResponseIsYaml()
+    {
+      var app = CreateAppProxy();
+
+      var result = app.Get("/menu/",
+                           with =>
+                           {
+                             with.HttpRequest();
+                             with.Header("Accept", "application/yaml");
+                           });
+
+      Assert.That(result.Context.Response.ContentType, Is.EqualTo("application/vnd.restbucks+yaml"));
     }
 
     [Test]

@@ -1,6 +1,7 @@
 ﻿namespace RestBucks.Resources.Orders.Representations
 {
   using System.Collections.Generic;
+  using System.Linq;
   using System.Xml.Serialization;
 
   using Domain;
@@ -11,6 +12,14 @@
     public OrderRepresentation()
     {
       Items = new List<OrderItemRepresentation>();
+    }
+    
+    public OrderRepresentation(Order order)
+    {
+      Location = order.Location;
+      Cost = order.Total;
+      Items = order.Items.Select(item => new OrderItemRepresentation(item)).ToList();
+      Status = order.Status;
     }
 
     [XmlElement(ElementName = "location")]

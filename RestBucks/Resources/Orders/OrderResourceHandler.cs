@@ -3,7 +3,6 @@ namespace RestBucks.Resources.Orders
   using System.IO;
   using System.Xml.Serialization;
   using System;
-
   using Nancy;
   using Nancy.ModelBinding;
 
@@ -39,11 +38,11 @@ namespace RestBucks.Resources.Orders
       return (T)ser.Deserialize(ms);
     }
 
-    public Response GetHandler(int orderId)
+    public Object GetHandler(int orderId)
     {
       var order = orderRepository.GetById(orderId);
       if (order == null) 
-        return HttpStatusCode.NotFound;
+        return (Response) HttpStatusCode.NotFound;
 
       if (order.Status == OrderStatus.Canceled)
         return Response.MovedTo(new ResourceLinker(Request.BaseUri()).BuildUriString(TrashHandler.path, TrashHandler.GetCancelledPath, new {orderId}));
@@ -51,8 +50,10 @@ namespace RestBucks.Resources.Orders
       if (Request.IsNotModified(order)) 
         return Response.NotModified();
 
-      return Response.WithContent(Request.Headers.Accept, OrderRepresentationMapper.Map(order, Request.BaseUri()))
-                     .WithCacheHeaders(order);
+      return 
+        Negotiate
+        .WithModel(OrderRepresentationMapper.Map(order, Request.BaseUri()))
+        .WithCacheHeaders(order); 
     }
 
     public Response Update(int orderId, OrderRepresentation orderRepresentation)

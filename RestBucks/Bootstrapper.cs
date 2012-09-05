@@ -1,10 +1,15 @@
-﻿namespace RestBucks
+﻿using System.Collections.Generic;
+using Iesi.Collections.Generic;
+using Nancy.Bootstrapper;
+
+namespace RestBucks
 {
   using System;
-
+  using System.Yaml.Serialization;
   using Bots;
 
   using Castle.Facilities.TypedFactory;
+  using Castle.MicroKernel.Registration;
   using Castle.MicroKernel.Resolvers.SpecializedResolvers;
   using Castle.Windsor;
   using Castle.Windsor.Installer;
@@ -29,22 +34,51 @@
         return new DiagnosticsConfiguration { Password = "RestBucksOnNancy" };
       }
     }
+    protected override IDiagnostics GetDiagnostics()
+    {
+      return base.GetDiagnostics();
+    }
 
     protected override void ConfigureApplicationContainer(IWindsorContainer existingContainer)
     {
       base.ConfigureApplicationContainer(existingContainer);
 
+      existingContainer.Register(
+        Component.For<YamlSerializer>()
+        .Instance(new YamlSerializer())
+        .LifestyleSingleton());
+
+      existingContainer.Register(
+        Component.For<YamlWrapper>()
+        .UsingFactoryMethod(
+          () => new YamlWrapper(existingContainer.Resolve<YamlSerializer>())));
+      
       existingContainer.AddFacility<TypedFactoryFacility>();
       existingContainer.Kernel.Resolver.AddSubResolver(new CollectionResolver(existingContainer.Kernel, true));
       existingContainer.Install(FromAssembly.This());
     }
 
-    protected override void ApplicationStartup(IWindsorContainer container, Nancy.Bootstrapper.IPipelines pipelines)
+    protected override IEnumerable<IApplicationStartup> GetApplicationStartupTasks()
+    {
+      return this.ApplicationContainer.ResolveAll<IApplicationStartup>(false);
+    }
+
+    protected override IEnumerable<IApplicationRegistrations> GetApplicationRegistrationTasks()
+    {
+      return this.ApplicationContainer.ResolveAll<IApplicationRegistrations>(false);
+    }
+
+    protected override void ApplicationStartup(IWindsorContainer container, IPipelines pipelines)
     {
       base.ApplicationStartup(container, pipelines);
 
       container.Resolve<Barista>();
 
+      ConfigureNHibernateSessionPerRequest(container, pipelines);
+    }
+
+    private void ConfigureNHibernateSessionPerRequest(IWindsorContainer container, IPipelines pipelines)
+    {
       pipelines.BeforeRequest += ctx => CreateSession(container);
       pipelines.BeforeRequest += ServeIndexPage;
       pipelines.AfterRequest += ctx => CommitSession(container);
