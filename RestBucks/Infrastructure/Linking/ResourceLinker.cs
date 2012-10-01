@@ -7,16 +7,16 @@
 
   public class ResourceLinker
   {
-    private readonly Uri baseUri;
+    private readonly string baseUri;
 
     public ResourceLinker(string httpBaseuri)
     {
-      baseUri = new Uri(httpBaseuri, UriKind.Absolute);
+      baseUri = httpBaseuri;
     }
 
     public string BuildUriString(string prefix, string template, dynamic parameters)
     {
-      var newBaseUri = new Uri(baseUri, prefix);
+      var newBaseUri = new Uri(baseUri.TrimEnd('/') + prefix);
       var uriTemplate = new UriTemplate(template, true);
 
       return uriTemplate.BindByName(newBaseUri, ToDictionary(parameters ?? new {})).ToString();

@@ -1,4 +1,6 @@
-﻿namespace RestBucks.Tests.Domain
+﻿using RestBucks.Infrastructure;
+
+namespace RestBucks.Tests.Domain
 {
   using NUnit.Framework;
 

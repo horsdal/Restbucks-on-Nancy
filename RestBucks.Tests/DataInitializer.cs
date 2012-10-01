@@ -1,3 +1,5 @@
+using RestBucks.Infrastructure.Installers;
+
 namespace RestBucks.Tests
 {
   using System.Linq;
@@ -9,8 +11,6 @@ namespace RestBucks.Tests
 
   using RestBucks.Data.Impl;
   using RestBucks.Domain;
-
-  using Infrastructure.Installers;
 
   [TestFixture]
   [Ignore("This not really a test, but a utility for creating and populating the RestBucks DB")]
