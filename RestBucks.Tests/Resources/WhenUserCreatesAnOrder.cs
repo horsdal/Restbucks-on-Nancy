@@ -1,3 +1,5 @@
+using RestBucks.Infrastructure.Linking;
+
 namespace RestBucks.Tests.Resources
 {
   using System;

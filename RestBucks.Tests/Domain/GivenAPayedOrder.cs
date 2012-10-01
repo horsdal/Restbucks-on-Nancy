@@ -1,3 +1,5 @@
+using RestBucks.Infrastructure;
+
 namespace RestBucks.Tests.Domain
 {
   using System.Linq;
