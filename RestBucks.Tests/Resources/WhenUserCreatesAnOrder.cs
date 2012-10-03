@@ -1,5 +1,3 @@
-using RestBucks.Infrastructure.Linking;
-
 namespace RestBucks.Tests.Resources
 {
   using System;
@@ -14,7 +12,7 @@ namespace RestBucks.Tests.Resources
 
   using RestBucks.Data;
   using RestBucks.Domain;
-  using Infrastructure.Linking;
+  using RestBucks.Infrastructure.Linking;
   using RestBucks.Resources.Orders;
   using RestBucks.Resources.Orders.Representations;
   using Util;

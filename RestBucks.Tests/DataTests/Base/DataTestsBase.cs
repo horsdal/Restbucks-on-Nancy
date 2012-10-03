@@ -1,12 +1,12 @@
-﻿using RestBucks.Infrastructure.Installers;
-
-namespace RestBucks.Tests.DataTests.Base
+﻿namespace RestBucks.Tests.DataTests.Base
 {
   using NHibernate;
   using NHibernate.Cfg;
   using NHibernate.Tool.hbm2ddl;
 
   using NUnit.Framework;
+
+  using RestBucks.Infrastructure.Installers;
 
   public class DataTestsBase
   {

@@ -1,5 +1,3 @@
-using RestBucks.Infrastructure.Installers;
-
 namespace RestBucks.Tests
 {
   using System.Linq;
@@ -9,6 +7,7 @@ namespace RestBucks.Tests
 
   using NUnit.Framework;
 
+  using RestBucks.Infrastructure.Installers;
   using RestBucks.Data.Impl;
   using RestBucks.Domain;
 

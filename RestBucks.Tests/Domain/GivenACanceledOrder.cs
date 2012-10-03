@@ -1,11 +1,9 @@
-﻿using RestBucks.Infrastructure;
-
-namespace RestBucks.Tests.Domain
+﻿namespace RestBucks.Tests.Domain
 {
   using NUnit.Framework;
 
   using RestBucks.Domain;
-  using Infrastructure;
+  using RestBucks.Infrastructure;
   using RestBucks.Resources.Orders.Representations;
 
   using SharpTestsEx;
