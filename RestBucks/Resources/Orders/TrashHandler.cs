@@ -24,14 +24,17 @@ namespace RestBucks.Resources.Orders
       Get[GetCancelledPath] = parameters => GetCanceled((int) parameters.orderId);
     }
 
-    public Response GetCanceled(int orderId)
+    private object GetCanceled(int orderId)
     {
       var order = orderRepository.Retrieve(o => o.Id == orderId && o.Status == OrderStatus.Canceled)
         .FirstOrDefault();
 
-      return order == null
-               ? HttpStatusCode.NotFound
-               : Response.AsXml(OrderRepresentationMapper.Map(order, Request.BaseUri()));
+      if (order == null)
+      {
+          return HttpStatusCode.NotFound;
+      }
+
+      return Negotiate.WithModel(OrderRepresentationMapper.Map(order, Request.BaseUri())).WithCacheHeaders(order);
     }
   }
 }

@@ -94,6 +94,7 @@
     <Compile Include="IntegrationSmokeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Representations\OrderRepresentationTests.cs" />
+    <Compile Include="Resources\WhenUserGETsACancelledOrder.cs" />
     <Compile Include="Resources\ResourceHandlerTestBase.cs" />
     <Compile Include="Resources\WhenUserGETsMenu.cs" />
     <Compile Include="Resources\WhenUserPayAnOrder.cs" />
