@@ -89,6 +89,8 @@
     <Compile Include="Domain\GivenAReadyOrder.cs" />
     <Compile Include="Domain\OrderTests.cs" />
     <Compile Include="Domain\EqualityMemberTests.cs" />
+    <Compile Include="Infrastructure\Linking\ResourceLinkerTests.cs" />
+    <Compile Include="Infrastructure\RequestExtensionsTests.cs" />
     <Compile Include="IntegrationSmokeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Representations\OrderRepresentationTests.cs" />
