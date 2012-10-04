@@ -124,6 +124,7 @@
     <Compile Include="Domain\Location.cs" />
     <Compile Include="Domain\Order.cs" />
     <Compile Include="Domain\OrderItem.cs" />
+    <Compile Include="Infrastructure\CamelCaseEnumConverter.cs" />
     <Compile Include="Infrastructure\YammlResponseProcessor.cs" />
     <Compile Include="Infrastructure\Data\Net4Collections.cs" />
     <Compile Include="Infrastructure\Installers\BotInstaller.cs" />
