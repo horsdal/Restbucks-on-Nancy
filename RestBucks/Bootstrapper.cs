@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Iesi.Collections.Generic;
 using Nancy.Bootstrapper;
+using Nancy.Json;
 
 namespace RestBucks
 {
@@ -75,6 +76,7 @@ namespace RestBucks
       container.Resolve<Barista>();
 
       ConfigureNHibernateSessionPerRequest(container, pipelines);
+      JsonSettings.Converters.Add(new CamelCaseEnumConverter());
     }
 
     private void ConfigureNHibernateSessionPerRequest(IWindsorContainer container, IPipelines pipelines)
