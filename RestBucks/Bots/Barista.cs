@@ -6,8 +6,7 @@ namespace RestBucks.Bots
 
   using NHibernate;
   using NHibernate.Linq;
-
-  using Domain;
+  using Orders.Domain;
 
   public class Barista
   {

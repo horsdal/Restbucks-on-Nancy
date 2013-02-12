@@ -4,9 +4,7 @@ namespace RestBucks.Tests.Resources
   using System.Linq;
 
   using NUnit.Framework;
-
-  using RestBucks.Domain;
-
+  using Orders.Domain;
   using Util;
 
   using SharpTestsEx;

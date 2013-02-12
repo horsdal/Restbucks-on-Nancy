@@ -9,12 +9,11 @@ namespace RestBucks.Tests.Resources
 
   using Nancy;
   using Nancy.Testing;
-
+  using Orders;
+  using Orders.Domain;
+  using Orders.Representations;
   using RestBucks.Data;
-  using RestBucks.Domain;
   using RestBucks.Infrastructure.Linking;
-  using RestBucks.Resources.Orders;
-  using RestBucks.Resources.Orders.Representations;
   using Util;
 
   using SharpTestsEx;

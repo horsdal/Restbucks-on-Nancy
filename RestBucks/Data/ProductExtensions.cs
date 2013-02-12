@@ -1,8 +1,7 @@
 namespace RestBucks.Data
 {
   using System.Linq;
-
-  using Domain;
+  using Products.Domain;
 
   public static class ProductExtensions
   {

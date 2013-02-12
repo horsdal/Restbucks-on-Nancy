@@ -6,7 +6,7 @@ namespace RestBucks.Tests.Util
   using System.Linq.Expressions;
 
   using RestBucks.Data;
-  using RestBucks.Domain.BaseClass;
+  using RestBucks.Infrastructure.Domain.BaseClass;
 
   public class RepositoryStub<T> : IRepository<T> where T : EntityBase
   {

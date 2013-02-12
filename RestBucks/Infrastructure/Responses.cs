@@ -1,9 +1,8 @@
 namespace RestBucks.Infrastructure
 {
   using System;
-  using Nancy;
-
   using Domain.BaseClass;
+  using Nancy;
   using Nancy.Responses.Negotiation;
 
   public static class ResponseHelpers

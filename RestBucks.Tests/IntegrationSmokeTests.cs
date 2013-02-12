@@ -4,10 +4,8 @@
 
   using Nancy;
   using Nancy.Testing;
-
+  using Orders.Representations;
   using RestBucks;
-  using RestBucks.Resources.Orders.Representations;
-
   using Util;
 
   [TestFixture]

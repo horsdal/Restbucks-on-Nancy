@@ -3,10 +3,10 @@ namespace RestBucks.Tests.Resources
   using Infrastructure.Linking;
 
   using Nancy.Testing;
-
+  using Orders.Domain;
+  using Products.Domain;
   using RestBucks.Data;
-  using RestBucks.Domain;
-
+  using RestBucks.Infrastructure.Domain;
   using Util;
 
   public abstract class ResourceHandlerTestBase

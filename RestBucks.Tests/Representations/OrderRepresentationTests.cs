@@ -4,9 +4,8 @@ namespace RestBucks.Tests.Representations
   using System.Linq;
 
   using NUnit.Framework;
-
-  using RestBucks.Domain;
-  using RestBucks.Resources.Orders.Representations;
+  using Orders.Domain;
+  using Orders.Representations;
   using RestBucks.Tests.Util;
 
   using SharpTestsEx;

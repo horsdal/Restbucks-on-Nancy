@@ -6,10 +6,10 @@ namespace RestBucks.Tests
   using NHibernate.Tool.hbm2ddl;
 
   using NUnit.Framework;
-
+  using Products.Domain;
+  using RestBucks.Infrastructure.Domain;
   using RestBucks.Infrastructure.Installers;
   using RestBucks.Data.Impl;
-  using RestBucks.Domain;
 
   [TestFixture]
   [Ignore("This not really a test, but a utility for creating and populating the RestBucks DB")]

@@ -3,10 +3,8 @@ namespace RestBucks.Tests.Resources
   using NUnit.Framework;
 
   using Nancy;
-
-  using RestBucks.Domain;
-  using RestBucks.Resources.Orders.Representations;
-
+  using Orders.Domain;
+  using Orders.Representations;
   using Util;
 
   using SharpTestsEx;

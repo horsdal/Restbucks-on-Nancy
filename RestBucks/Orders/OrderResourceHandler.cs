@@ -1,15 +1,14 @@
-namespace RestBucks.Resources.Orders
+namespace RestBucks.Orders
 {
+  using System;
   using System.IO;
   using System.Xml.Serialization;
-  using System;
-  using Nancy;
-  using Nancy.ModelBinding;
-
   using Data;
   using Domain;
   using Infrastructure;
   using Infrastructure.Linking;
+  using Nancy;
+  using Nancy.ModelBinding;
   using Representations;
 
   public class OrderResourceHandler : NancyModule

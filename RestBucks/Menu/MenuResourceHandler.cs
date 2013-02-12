@@ -1,15 +1,12 @@
-﻿namespace RestBucks.Resources.Menu
+namespace RestBucks.Menu
 {
   using System;
   using System.Collections.Generic;
   using System.Linq;
-  
-  using Products;
   using Data;
-  using Domain;
   using Infrastructure;
-  
   using Nancy;
+  using Products.Domain;
 
   public class MenuResourceHandler : NancyModule
   {

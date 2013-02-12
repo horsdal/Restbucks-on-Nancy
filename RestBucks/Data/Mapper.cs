@@ -3,12 +3,12 @@ namespace RestBucks.Data
   using System.Collections.Generic;
   using System.Linq;
   using System.Reflection;
-
+  using Infrastructure.Domain;
+  using Infrastructure.Domain.BaseClass;
   using NHibernate.Cfg.MappingSchema;
   using NHibernate.Mapping.ByCode;
-
-  using Domain;
-  using Domain.BaseClass;
+  using Orders.Domain;
+  using Products.Domain;
 
   public class Mapper
   {

@@ -1,10 +1,8 @@
 ﻿namespace RestBucks.Infrastructure
 {
   using System.Linq;
-
-  using Nancy;
-
   using Domain.BaseClass;
+  using Nancy;
 
   public static class RequestExtensions
   {

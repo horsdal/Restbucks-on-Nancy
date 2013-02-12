@@ -4,11 +4,10 @@ namespace RestBucks.Tests.Data
   using System.Linq;
 
   using NUnit.Framework;
-
+  using Orders.Domain;
+  using Products.Domain;
   using RestBucks.Data.Impl;
-  using RestBucks.Domain;
   using DataTests.Base;
-
   using SharpTestsEx;
 
   [TestFixture]

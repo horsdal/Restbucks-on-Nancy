@@ -1,9 +1,9 @@
 namespace RestBucks.Tests.Domain
 {
   using NUnit.Framework;
-
-  using RestBucks.Domain;
-
+  using Orders.Domain;
+  using Products.Domain;
+  using RestBucks.Infrastructure.Domain;
   using SharpTestsEx;
 
   [TestFixture]
