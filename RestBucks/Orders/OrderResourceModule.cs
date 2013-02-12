@@ -11,7 +11,7 @@ namespace RestBucks.Orders
   using Nancy.ModelBinding;
   using Representations;
 
-  public class OrderResourceHandler : NancyModule
+  public class OrderResourceModule : NancyModule
   {
     private readonly IRepository<Order> orderRepository;
 
@@ -20,7 +20,7 @@ namespace RestBucks.Orders
     public static string PaymentPath = "/{orderId}/payment/";
     public static string ReceiptPath = "/{orderId}/receipt/";
 
-    public OrderResourceHandler(IRepository<Order> orderRepository) 
+    public OrderResourceModule(IRepository<Order> orderRepository) 
       : base(Path)
     {
       this.orderRepository = orderRepository;
@@ -44,8 +44,8 @@ namespace RestBucks.Orders
         return (Response) HttpStatusCode.NotFound;
 
       if (order.Status == OrderStatus.Canceled)
-        return Response.MovedTo(new ResourceLinker(Request.BaseUri()).BuildUriString(TrashHandler.path,
-                                                                                TrashHandler.GetCancelledPath,
+        return Response.MovedTo(new ResourceLinker(Request.BaseUri()).BuildUriString(TrashModule.path,
+                                                                                TrashModule.GetCancelledPath,
                                                                                 new {orderId}));
 
       if (Request.IsNotModified(order))

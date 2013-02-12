@@ -7,13 +7,13 @@ namespace RestBucks.Orders
   using Nancy;
   using Representations;
 
-  public class TrashHandler : NancyModule
+  public class TrashModule : NancyModule
   {
     private readonly IRepository<Order> orderRepository;
     public const string GetCancelledPath = "/order/{orderId}";
     public const string path = "/trash";
 
-    public TrashHandler(IRepository<Order> orderRepository)
+    public TrashModule(IRepository<Order> orderRepository)
       : base(path)
     {
       this.orderRepository = orderRepository;

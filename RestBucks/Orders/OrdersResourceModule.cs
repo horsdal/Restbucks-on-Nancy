@@ -11,13 +11,13 @@ namespace RestBucks.Orders
   using Products.Domain;
   using Representations;
 
-  public class OrdersResourceHandler : NancyModule
+  public class OrdersResourceModule : NancyModule
   {
     private readonly IRepository<Product> productRepository;
     private readonly IRepository<Order> orderRepository;
     private Response errorResponse;
 
-    public OrdersResourceHandler(IRepository<Product> productRepository,
+    public OrdersResourceModule(IRepository<Product> productRepository,
                                  IRepository<Order> orderRepository)
       : base("/orders")
     {
@@ -78,8 +78,8 @@ namespace RestBucks.Orders
     private Response Created(Order order)
     {
       var uri = new ResourceLinker(Request.BaseUri()).BuildUriString(
-        OrderResourceHandler.Path,
-        OrderResourceHandler.SlashOrderId,
+        OrderResourceModule.Path,
+        OrderResourceModule.SlashOrderId,
         new {orderId = order.Id});
       
       return Response.Created(uri);

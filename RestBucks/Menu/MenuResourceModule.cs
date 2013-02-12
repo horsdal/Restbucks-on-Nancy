@@ -8,12 +8,12 @@ namespace RestBucks.Menu
   using Nancy;
   using Products.Domain;
 
-  public class MenuResourceHandler : NancyModule
+  public class MenuResourceModule : NancyModule
   {
     private readonly IRepository<Product> productRepository;
     private static readonly TimeSpan menuMaxAge = TimeSpan.FromHours(6);
 
-    public MenuResourceHandler(IRepository<Product> productRepository) : base("menu")
+    public MenuResourceModule(IRepository<Product> productRepository) : base("menu")
     {
       this.productRepository = productRepository;
 
