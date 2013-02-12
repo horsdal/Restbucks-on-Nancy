@@ -41,19 +41,20 @@ namespace RestBucks.Resources.Orders
     public Object GetHandler(int orderId)
     {
       var order = orderRepository.GetById(orderId);
-      if (order == null) 
+      if (order == null)
         return (Response) HttpStatusCode.NotFound;
 
       if (order.Status == OrderStatus.Canceled)
-        return Response.MovedTo(new ResourceLinker(Request.BaseUri()).BuildUriString(TrashHandler.path, TrashHandler.GetCancelledPath, new {orderId}));
+        return Response.MovedTo(new ResourceLinker(Request.BaseUri()).BuildUriString(TrashHandler.path,
+                                                                                TrashHandler.GetCancelledPath,
+                                                                                new {orderId}));
 
-      if (Request.IsNotModified(order)) 
+      if (Request.IsNotModified(order))
         return Response.NotModified();
 
-      return 
-        Negotiate
+      return Negotiate
         .WithModel(OrderRepresentationMapper.Map(order, Request.BaseUri()))
-        .WithCacheHeaders(order); 
+        .WithCacheHeaders(order);
     }
 
     public Response Update(int orderId, OrderRepresentation orderRepresentation)

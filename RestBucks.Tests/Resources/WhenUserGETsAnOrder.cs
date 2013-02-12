@@ -51,6 +51,7 @@ namespace RestBucks.Tests.Resources
                 {
                   with.HttpRequest();
                   with.Header("If-None-Match", "\"1\"");
+                  with.Header("Accept", "application/vnd.restbucks+xml");
                 });
 
       // Assert

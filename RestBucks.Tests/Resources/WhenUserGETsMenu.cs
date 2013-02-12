@@ -14,7 +14,7 @@
     public void StatusCodeIs200Ok()
     {
       var app = CreateAppProxy();
-      Assert.That(app.Get("/menu/").StatusCode, Is.EqualTo(HttpStatusCode.OK));
+      Assert.That(app.Get("/menu/", with => with.Header("Accept", "application/xml")).StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
     [Test]
@@ -164,6 +164,7 @@
                 {
                   with.HttpRequest();
                   with.Header("If-None-Match", "\"0\"");
+                  with.Header("Accept", "application/xml");
                 });
 
       // Assert

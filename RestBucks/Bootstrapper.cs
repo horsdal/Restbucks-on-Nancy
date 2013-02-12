@@ -53,7 +53,6 @@ namespace RestBucks
         .UsingFactoryMethod(
           () => new YamlWrapper(existingContainer.Resolve<YamlSerializer>())));
       
-      existingContainer.AddFacility<TypedFactoryFacility>();
       existingContainer.Kernel.Resolver.AddSubResolver(new CollectionResolver(existingContainer.Kernel, true));
       existingContainer.Install(FromAssembly.This());
     }

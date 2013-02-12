@@ -84,7 +84,8 @@ namespace RestBucks.Tests.Resources
 
       // Act
       var response = app.Delete("/order/123/");
-      var responseToGet = app.Get("/trash/order/123/");
+      var responseToGet = app.Get("/trash/order/123/",
+          with => with.Header("Accept", "application/xml"));
 
       responseToGet.StatusCode.Should().Be.EqualTo(HttpStatusCode.OK);
       responseToGet.Body.AsString().Should().Be.EqualTo(expectedBody);

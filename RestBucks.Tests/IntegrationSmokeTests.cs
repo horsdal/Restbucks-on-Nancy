@@ -33,7 +33,7 @@
 
       var orderPath = GetOrderPath(createdResponse);
 
-      var getOrderResponse = app.Get(orderPath);
+      var getOrderResponse = app.Get(orderPath, with => with.Header("Accept", "application/xml"));
       Assert.That(getOrderResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK), string.Format("order at {0} not found", orderPath));
 
       var deletedResponse = app.Delete(orderPath);
