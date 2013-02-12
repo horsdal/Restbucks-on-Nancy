@@ -9,21 +9,24 @@
 
   public class XmlResponseProcessor : IResponseProcessor
   {
-    private ISerializer xmlSerializer;
+    private readonly ISerializer xmlSerializer;
 
     public XmlResponseProcessor(IEnumerable<ISerializer> serializers)
     {
-      xmlSerializer = serializers.FirstOrDefault(s => s.CanSerialize("application/xml"));
+      xmlSerializer = serializers.First(s => s.GetType() == typeof(DefaultXmlSerializer));
     }
 
     public ProcessorMatch CanProcess(MediaRange requestedMediaRange, dynamic model, NancyContext context)
     {
-      if (IsWildCardOrApplicationType(requestedMediaRange.Type) && IsWildCardOrXmlSubType(requestedMediaRange.Subtype))
+      if (IsSomeXmlType(requestedMediaRange) || IsTextHhtml(requestedMediaRange))
         return new ProcessorMatch {RequestedContentTypeResult = MatchResult.ExactMatch, ModelResult = MatchResult.DontCare};
-      else if (IsTextHhtml(requestedMediaRange))
-        return new ProcessorMatch { RequestedContentTypeResult = MatchResult.NonExactMatch, ModelResult = MatchResult.DontCare };
       else
         return new ProcessorMatch {ModelResult = MatchResult.NoMatch, RequestedContentTypeResult = MatchResult.NoMatch};
+    }
+
+    private static bool IsSomeXmlType(MediaRange requestedMediaRange)
+    {
+      return IsWildCardOrApplicationType(requestedMediaRange.Type) && IsWildCardOrXmlSubType(requestedMediaRange.Subtype);
     }
 
     private bool IsTextHhtml(MediaRange requestedMediaRange)
@@ -54,8 +57,7 @@
     {
       get
       {
-        yield return
-          new Tuple<string, MediaRange>("xml", new MediaRange {Type = "application", Subtype = "vnd.restbucks+xml"});
+        yield return new Tuple<string, MediaRange>("xml", "application/vnd.restbucks+xml");
       }
     }
   }

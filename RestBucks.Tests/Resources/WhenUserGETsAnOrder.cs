@@ -145,5 +145,22 @@ namespace RestBucks.Tests.Resources
       // Assert
       Assert.That(result.Context.Response.ContentType, Is.EqualTo("application/vnd.restbucks+xml"));
     }
+
+    [Test]
+    public void WithTextHtmlDefaultToReturningRestbucksXmlRepresentation()
+    {
+      // Arrange
+      var order = new Order { Id = 123, Location = Location.TakeAway };
+      order.AddItem(new OrderItem(latte, 1, 1, new Dictionary<string, string>()));
+      var orderRepo = new RepositoryStub<Order>(order);
+
+      var app = CreateAppProxy(orderRepo);
+
+      // Act
+      var result = app.Get("/order/123/");
+
+      // Assert
+      Assert.That(result.Context.Response.ContentType, Is.EqualTo("application/vnd.restbucks+xml"));      
+    }
   }
 }

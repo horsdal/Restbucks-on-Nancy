@@ -23,7 +23,7 @@ namespace RestBucks.Tests.Resources
       var orderRepo = new RepositoryStub<Order>(new Order { Id = 123, Status = OrderStatus.Canceled });
       var app = CreateAppProxy(orderRepo);
 
-      var response = app.Get("/trash/order/123/", with => with.Header("Accept", "application/xml"));
+      var response = app.Get("/trash/order/123/");
 
       response.StatusCode.Should().Be.EqualTo(HttpStatusCode.OK);
     }
@@ -33,7 +33,7 @@ namespace RestBucks.Tests.Resources
     {
       var app = CreateAppProxy();
 
-      var response = app.Get("/trash/order/123", with => with.Header("Accept", "application/xml"));
+      var response = app.Get("/trash/order/123");
 
       response.StatusCode.Should().Be.EqualTo(HttpStatusCode.NotFound);
     }
@@ -44,7 +44,7 @@ namespace RestBucks.Tests.Resources
         var orderRepo = new RepositoryStub<Order>(new Order { Id = 123, Status = OrderStatus.Unpaid });
         var app = CreateAppProxy(orderRepo);
 
-        var response = app.Get("/trash/order/123", with => with.Header("Accept", "application/xml"));
+        var response = app.Get("/trash/order/123");
 
         response.StatusCode.Should().Be.EqualTo(HttpStatusCode.NotFound);
     }
