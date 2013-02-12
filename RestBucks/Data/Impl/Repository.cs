@@ -42,8 +42,7 @@
 
     public IQueryable<T> Retrieve(Expression<Func<T, bool>> criteria)
     {
-      return Queryable.Where(CurrentSession
-                               .Query<T>(), criteria);
+      return CurrentSession.Query<T>().Where(criteria);
     }
 
     public IQueryable<T> RetrieveAll()
