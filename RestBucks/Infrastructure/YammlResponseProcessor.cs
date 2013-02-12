@@ -33,7 +33,7 @@
 
   public class YamlResponseProcessor : IResponseProcessor
   {
-    private ISerializer yamlSerializer;
+    private readonly ISerializer yamlSerializer;
 
     public YamlResponseProcessor(YamlWrapper serializer)
     {
@@ -42,7 +42,7 @@
 
     public ProcessorMatch CanProcess(MediaRange requestedMediaRange, dynamic model, NancyContext context)
     {
-      if (isWildCardOrApplicationType(requestedMediaRange.Type) && IsWildCardOrYamlSubType(requestedMediaRange.Subtype))
+      if (IsWildCardOrApplicationType(requestedMediaRange.Type) && IsWildCardOrYamlSubType(requestedMediaRange.Subtype))
         return new ProcessorMatch {RequestedContentTypeResult = MatchResult.ExactMatch, ModelResult = MatchResult.DontCare};
       else
         return new ProcessorMatch {ModelResult = MatchResult.NoMatch, RequestedContentTypeResult = MatchResult.NoMatch};
@@ -53,7 +53,7 @@
       return (subtype.IsWildcard || subtype.ToString().ToLower().Equals("yaml") || subtype.ToString().ToLower().Contains("+yaml"));
     }
 
-    private static bool isWildCardOrApplicationType(MediaType superType)
+    private static bool IsWildCardOrApplicationType(MediaType superType)
     {
       return (superType.IsWildcard || superType.ToString().ToLower().Equals("application"));
     }
@@ -68,8 +68,7 @@
     {
       get
       {
-        yield return
-          new Tuple<string, MediaRange>("yaml", new MediaRange {Type = "application", Subtype = "vnd.restbucks+yaml"});
+        yield return new Tuple<string, MediaRange>("yaml", "application/vnd.restbucks+yaml");
       }
     }
   }
