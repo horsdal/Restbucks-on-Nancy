@@ -26,7 +26,7 @@ namespace RestBucks.Orders
       this.orderRepository = orderRepository;
 
       Get[SlashOrderId] = parameters => GetHandler((int) parameters.orderId);
-      Post[SlashOrderId] = parameters => Update((int)parameters.orderId, this.Bind<OrderRepresentation>());
+      Put[SlashOrderId] = parameters => Update((int)parameters.orderId, this.Bind<OrderRepresentation>());
       Delete[SlashOrderId] = parameters => Cancel((int) parameters.orderId);
       Post[PaymentPath] = parameters => Pay((int) parameters.orderId, FromXmlStream<PaymentRepresentation>(Request.Body));
     }
@@ -82,7 +82,7 @@ namespace RestBucks.Orders
       if (order == null) 
         return HttpStatusCode.NotFound;
       order.Pay(paymentArgs.CardNumber, paymentArgs.CardOwner);
-      return HttpStatusCode.OK;
+      return HttpStatusCode.Created;
     }
 
     public Response Receipt(int orderId)

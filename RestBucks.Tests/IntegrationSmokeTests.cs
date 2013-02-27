@@ -83,7 +83,7 @@
                                        var xmlString = new PaymentRepresentation { CardNumber = "321", CardOwner = "Jose" }.ToXmlString();
                                        with.Body(xmlString);
                                      });
-      Assert.That(paymentResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+      Assert.That(paymentResponse.StatusCode, Is.EqualTo(HttpStatusCode.Created));
 
       var cancelResponse = app.Delete(orderPath);
       Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));

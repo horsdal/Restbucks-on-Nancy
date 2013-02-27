@@ -19,7 +19,7 @@ namespace RestBucks.Tests.Resources
       var app = CreateAppProxy();
 
       // Act
-      var response = app.Post("/order/123/",
+      var response = app.Put("/order/123/",
                               with =>
                               {
                                 with.HttpRequest();
@@ -37,7 +37,7 @@ namespace RestBucks.Tests.Resources
       var app = CreateAppProxy(new RepositoryStub<Order>(order));
 
       // Act
-      var response = app.Post("/order/123/",
+      var response = app.Put("/order/123/",
                               with =>
                               {
                                 with.HttpRequest();
