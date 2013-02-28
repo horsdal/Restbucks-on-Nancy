@@ -8,7 +8,9 @@
   {
     public static bool IsNotModified(this Request request, IVersionable versionable)
     {
-      if (!request.Headers.IfNoneMatch.Any()) return false;
+      if (!request.Headers.IfNoneMatch.Any())
+        return false;
+
       var etag = request.Headers.IfNoneMatch.First();
       return string.Format("\"{0}\"", versionable.Version) == etag;
     }
