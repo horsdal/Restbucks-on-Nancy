@@ -35,8 +35,9 @@ namespace RestBucks.Tests.Resources
         new ConfigurableBootstrapper
           (with =>
            {
-             with.Dependency<IRepository<Product>>(productRepository ?? defaultProductRepository);
-             with.Dependency<IRepository<Order>>(orderRepository ?? new RepositoryStub<Order>());
+             with.Dependency(productRepository ?? defaultProductRepository);
+             with.Dependency(orderRepository ?? new RepositoryStub<Order>());
+             with.AllDiscoveredModules();
            }
           ));
     }

@@ -69,7 +69,7 @@
                              with.Header("Accept", "application/json");
                            });
 
-      Assert.That(result.Context.Response.ContentType, Is.EqualTo("application/json"));
+      Assert.That(result.Context.Response.ContentType, Contains.Substring("application/json"));
     }
 
     [Test]

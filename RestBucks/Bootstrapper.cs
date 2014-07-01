@@ -34,10 +34,6 @@ namespace RestBucks
         return new DiagnosticsConfiguration { Password = "RestBucksOnNancy" };
       }
     }
-    protected override IDiagnostics GetDiagnostics()
-    {
-      return base.GetDiagnostics();
-    }
 
     protected override void ConfigureApplicationContainer(IWindsorContainer existingContainer)
     {
@@ -55,16 +51,6 @@ namespace RestBucks
       
       existingContainer.Kernel.Resolver.AddSubResolver(new CollectionResolver(existingContainer.Kernel, true));
       existingContainer.Install(FromAssembly.This());
-    }
-
-    protected override IEnumerable<IApplicationStartup> GetApplicationStartupTasks()
-    {
-      return this.ApplicationContainer.ResolveAll<IApplicationStartup>(false);
-    }
-
-    protected override IEnumerable<IApplicationRegistrations> GetApplicationRegistrationTasks()
-    {
-      return this.ApplicationContainer.ResolveAll<IApplicationRegistrations>(false);
     }
 
     protected override void ApplicationStartup(IWindsorContainer container, IPipelines pipelines)
