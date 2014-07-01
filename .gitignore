@@ -8,3 +8,7 @@ Packages
 *dotCover*
 *ncrunch*
 *.crunchsolution.cache
+*.chk
+*.log
+*.jrs
+*.ide
