@@ -1,5 +1,8 @@
 namespace RestBucks.Tests.Resources
 {
+  using Bots;
+  using Nancy.Routing;
+  using Nancy.TinyIoc;
   using NUnit.Framework;
 
   using Nancy;
@@ -76,9 +79,9 @@ namespace RestBucks.Tests.Resources
     {
       // Arrange
       var order = new Order { Id = 123, Status = OrderStatus.Canceled };
-      var expectedBody = OrderRepresentationMapper.Map(order, "http://bogus/").ToXmlString();
-      order.Status = OrderStatus.Unpaid;
       var app = CreateAppProxy(new RepositoryStub<Order>(order));
+      var expectedBody = OrderRepresentationMapper.Map(order, "http://bogus/", Container.Resolve<IRouteCache>()).ToXmlString();
+      order.Status = OrderStatus.Unpaid;
 
       // Act
       var response = app.Delete("/order/123/");

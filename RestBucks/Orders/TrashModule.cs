@@ -5,18 +5,21 @@ namespace RestBucks.Orders
   using Domain;
   using Infrastructure;
   using Nancy;
+  using Nancy.Routing;
   using Representations;
 
   public class TrashModule : NancyModule
   {
     private readonly IRepository<Order> orderRepository;
+    private readonly IRouteCacheProvider routeCacheProvider;
     public const string GetCancelledPath = "/order/{orderId}";
     public const string path = "/trash";
 
-    public TrashModule(IRepository<Order> orderRepository)
+    public TrashModule(IRepository<Order> orderRepository, IRouteCacheProvider routeCacheProvider)
       : base(path)
     {
       this.orderRepository = orderRepository;
+      this.routeCacheProvider = routeCacheProvider;
 
       Get[GetCancelledPath] = parameters => GetCanceled((int) parameters.orderId);
     }
@@ -31,7 +34,7 @@ namespace RestBucks.Orders
           return HttpStatusCode.NotFound;
       }
 
-      return Negotiate.WithModel(OrderRepresentationMapper.Map(order, Request.BaseUri())).WithCacheHeaders(order);
+      return Negotiate.WithModel(OrderRepresentationMapper.Map(order, Request.BaseUri(), routeCacheProvider.GetCache())).WithCacheHeaders(order);
     }
   }
 }

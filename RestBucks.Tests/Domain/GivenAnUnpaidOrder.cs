@@ -1,10 +1,13 @@
 ﻿namespace RestBucks.Tests.Domain
 {
   using System.Linq;
-
+  using Nancy;
+  using Nancy.Routing;
+  using Nancy.Testing;
   using NUnit.Framework;
   using Orders.Domain;
   using Orders.Representations;
+  using Resources;
   using SharpTestsEx;
 
   [TestFixture]
@@ -16,8 +19,11 @@
     [SetUp]
     public void SetUp()
     {
+      var appHelper = new ResourceHandlerTestBase();
+      appHelper.CreateAppProxy();
+
       order = new Order();
-      representation = OrderRepresentationMapper.Map(order, "http://restbuckson.net/");
+      representation = OrderRepresentationMapper.Map(order, "http://restbuckson.net/", appHelper.Container.Resolve<IRouteCache>());
     }
 
     [Test]

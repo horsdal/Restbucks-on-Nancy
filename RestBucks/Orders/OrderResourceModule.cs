@@ -9,26 +9,29 @@ namespace RestBucks.Orders
   using Infrastructure.Linking;
   using Nancy;
   using Nancy.ModelBinding;
+  using Nancy.Routing;
   using Representations;
 
   public class OrderResourceModule : NancyModule
   {
     private readonly IRepository<Order> orderRepository;
+    private readonly IRouteCacheProvider routeCacheProvider;
 
     public static string Path = "/order";
     public static string SlashOrderId = "/{orderId}/";
     public static string PaymentPath = "/{orderId}/payment/";
     public static string ReceiptPath = "/{orderId}/receipt/";
 
-    public OrderResourceModule(IRepository<Order> orderRepository) 
+    public OrderResourceModule(IRepository<Order> orderRepository, IRouteCacheProvider routeCacheProvider) 
       : base(Path)
     {
       this.orderRepository = orderRepository;
+      this.routeCacheProvider = routeCacheProvider;
 
-      Get[SlashOrderId] = parameters => GetHandler((int) parameters.orderId);
-      Put[SlashOrderId] = parameters => Update((int)parameters.orderId, this.Bind<OrderRepresentation>());
-      Delete[SlashOrderId] = parameters => Cancel((int) parameters.orderId);
-      Post[PaymentPath] = parameters => Pay((int) parameters.orderId, FromXmlStream<PaymentRepresentation>(Request.Body));
+      Get["ReadOrder", SlashOrderId] = parameters => GetHandler((int) parameters.orderId);
+      Put["UpdateOrder", SlashOrderId] = parameters => Update((int)parameters.orderId, this.Bind<OrderRepresentation>());
+      Delete["CancelOrder", SlashOrderId] = parameters => Cancel((int) parameters.orderId);
+      Post["PayOrder", PaymentPath] = parameters => Pay((int) parameters.orderId, FromXmlStream<PaymentRepresentation>(Request.Body));
     }
 
     public static T FromXmlStream<T>(Stream ms)
@@ -52,7 +55,7 @@ namespace RestBucks.Orders
         return Response.NotModified();
 
       return Negotiate
-        .WithModel(OrderRepresentationMapper.Map(order, Request.BaseUri()))
+        .WithModel(OrderRepresentationMapper.Map(order, Request.BaseUri(), routeCacheProvider.GetCache()))
         .WithCacheHeaders(order);
     }
 

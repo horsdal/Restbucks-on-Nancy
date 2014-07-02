@@ -1,8 +1,10 @@
 ﻿namespace RestBucks.Tests.Domain
 {
+  using Nancy.Routing;
   using NUnit.Framework;
   using Orders.Domain;
   using Orders.Representations;
+  using Resources;
   using RestBucks.Infrastructure;
   using SharpTestsEx;
 
@@ -15,9 +17,12 @@
     [SetUp]
     public void SetUp()
     {
+      var appHelper = new ResourceHandlerTestBase();
+      appHelper.CreateAppProxy();
+
       order = new Order();
       order.Cancel("You are too slow.");
-      representation = OrderRepresentationMapper.Map(order, "http://baseaddress/");
+      representation = OrderRepresentationMapper.Map(order, "http://baseaddress/", appHelper.Container.Resolve<IRouteCache>());
     }
 
     [Test]
