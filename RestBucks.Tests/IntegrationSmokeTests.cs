@@ -43,7 +43,7 @@
 
     private static string GetOrderPath(BrowserResponse createdResponse)
     {
-      var orderPath = createdResponse.Headers["Location"].Remove(0, 12);
+      var orderPath = createdResponse.Headers["Location"].Remove(0, 23);
       return orderPath;
     }
 

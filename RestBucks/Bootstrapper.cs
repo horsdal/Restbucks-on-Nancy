@@ -15,7 +15,7 @@ namespace RestBucks
   using Castle.Windsor.Installer;
 
   using Infrastructure;
-
+  using Infrastructure.Linking;
   using NHibernate;
   using NHibernate.Context;
 
@@ -51,6 +51,7 @@ namespace RestBucks
       
       existingContainer.Kernel.Resolver.AddSubResolver(new CollectionResolver(existingContainer.Kernel, true));
       existingContainer.Install(FromAssembly.This());
+      existingContainer.Register(Component.For<ResourceLinker>().LifestyleTransient());
     }
 
     protected override void ApplicationStartup(IWindsorContainer container, IPipelines pipelines)

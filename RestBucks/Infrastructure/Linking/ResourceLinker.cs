@@ -4,22 +4,34 @@
   using System.Collections.Generic;
   using System.ComponentModel;
   using System.Linq;
+  using Nancy;
+  using Nancy.Routing;
 
   public class ResourceLinker
   {
-    private readonly string baseUri;
-
-    public ResourceLinker(string httpBaseuri)
+    private readonly IRouteCacheProvider routesProvider;
+    private List<RouteDescription> allRoutes = null; 
+    private List<RouteDescription> AllRoutes
     {
-      baseUri = httpBaseuri;
+      get
+      {
+        if (allRoutes == null)
+          allRoutes = routesProvider.GetCache().SelectMany(pair => pair.Value.Select(tuple => tuple.Item2)).ToList();
+        return allRoutes;
+      }
     }
 
-    public string BuildUriString(string prefix, string template, dynamic parameters)
+    public ResourceLinker(IRouteCacheProvider routesProvider)
     {
-      var newBaseUri = new Uri(baseUri.TrimEnd('/') + prefix);
-      var uriTemplate = new UriTemplate(template, true);
+      this.routesProvider = routesProvider;
+    }
 
-      return uriTemplate.BindByName(newBaseUri, ToDictionary(parameters ?? new {})).ToString();
+    public string BuildUriString(NancyContext context, string routeName, dynamic parameters)
+    {
+      var baseUri = new Uri(context.Request.BaseUri().TrimEnd('/'));
+      var pathTemplate = AllRoutes.Single(r => r.Name == routeName).Path;
+      var uriTemplate = new UriTemplate(pathTemplate, true);
+      return uriTemplate.BindByName(baseUri, ToDictionary(parameters ?? new {})).ToString();
     }
 
     private static IDictionary<string, string> ToDictionary(object anonymousInstance)

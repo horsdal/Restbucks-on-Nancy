@@ -7,6 +7,7 @@ namespace RestBucks.Tests.Domain
   using Orders.Representations;
   using Resources;
   using RestBucks.Infrastructure;
+  using RestBucks.Infrastructure.Linking;
   using SharpTestsEx;
 
   public class GivenAReadyOrder
@@ -18,22 +19,12 @@ namespace RestBucks.Tests.Domain
     public void SetUp()
     {
       var appHelper = new ResourceHandlerTestBase();
-      appHelper.CreateAppProxy();
+      var app = appHelper.CreateAppProxy();
 
       order = new Order();
       order.Pay("123", "jose");
       order.Finish();
-      representation = OrderRepresentationMapper.Map(order, "http://restbuckson.net/", appHelper.Container.Resolve<IRouteCache>());
-    }
-
-    [Test]
-    public void ThenNextStepsIncludeGet()
-    {
-      representation.Links
-        .Satisfy(
-          links =>
-          links.Any(
-            l => l.Uri == "http://restbuckson.net/order/0/receipt" && l.Relation.EndsWith("docs/receipt-coffee.htm")));
+      representation = OrderRepresentationMapper.Map(order, appHelper.Container.Resolve<ResourceLinker>(), app.Get("/order").Context);
     }
 
     [Test]

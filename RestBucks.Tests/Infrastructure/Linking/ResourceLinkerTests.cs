@@ -4,6 +4,7 @@
   using NUnit.Framework;
   using RestBucks.Infrastructure.Linking;
 
+#if false
   public class ResourceLinkerTests
   {
     [Test]
@@ -58,4 +59,5 @@
                     "The path variable 'ID' in the UriTemplate must be bound to a non-empty string value.\r\nParameter name: parameters"));
     }
   }
+  #endif
 }

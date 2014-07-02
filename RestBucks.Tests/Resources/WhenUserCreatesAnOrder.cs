@@ -4,7 +4,7 @@ namespace RestBucks.Tests.Resources
   using System.Linq;
 
   using Moq;
-
+  using Nancy.Routing;
   using NUnit.Framework;
 
   using Nancy;
@@ -21,8 +21,6 @@ namespace RestBucks.Tests.Resources
   [TestFixture]
   public class WhenUserCreatesAnOrder : ResourceHandlerTestBase
   {
-    private readonly ResourceLinker resourceLinker = new ResourceLinker("http://bogus/");
-
     [Test]
     public void WhenAProductDoesNotExist_ThenReturn400AndTheProperREasonPhrase()
     {
@@ -138,11 +136,11 @@ namespace RestBucks.Tests.Resources
       orderRepository
         .Setup(or => or.MakePersistent(It.IsAny<Order[]>()))
         .Callback<Order[]>(o => o.First().Id = 123);
-
-      var expectedUriToTheNewOrder =
-        resourceLinker.BuildUriString("/order/", OrderResourceModule.SlashOrderId,new { orderId = "123" });
-
       var appProxy = CreateAppProxy(orderRepository.Object);
+
+      var expectedUriToTheNewOrder = 
+        new ResourceLinker(Container.Resolve<IRouteCacheProvider>()).BuildUriString(appProxy.Get("/orders").Context, "ReadOrder", new { orderId = "123" });
+
       var orderRepresentation = new OrderRepresentation()
                                 {
                                   Items = {new OrderItemRepresentation() {Name = "latte", Quantity = 1}}

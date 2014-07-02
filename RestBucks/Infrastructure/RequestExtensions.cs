@@ -20,8 +20,7 @@
       var host = request.Url.Port == null
                    ? request.Url.HostName
                    : string.Format("{0}:{1}", request.Url.HostName, request.Url.Port);
-      return string.Format("{0}://{1}{2}", request.Url.Scheme, string.IsNullOrWhiteSpace(host) ? "bogus" : host, request.Url.BasePath);
+      return string.Format("{0}://{1}{2}", request.Url.Scheme, string.IsNullOrWhiteSpace(host) ? "restbuckson.net" : host, request.Url.BasePath);
     }
-
   }
 }

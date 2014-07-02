@@ -8,6 +8,7 @@
   using Orders.Domain;
   using Orders.Representations;
   using Resources;
+  using RestBucks.Infrastructure.Linking;
   using SharpTestsEx;
 
   [TestFixture]
@@ -20,10 +21,10 @@
     public void SetUp()
     {
       var appHelper = new ResourceHandlerTestBase();
-      appHelper.CreateAppProxy();
+      var app = appHelper.CreateAppProxy();
 
       order = new Order();
-      representation = OrderRepresentationMapper.Map(order, "http://restbuckson.net/", appHelper.Container.Resolve<IRouteCache>());
+      representation = OrderRepresentationMapper.Map(order, appHelper.Container.Resolve<ResourceLinker>(), app.Get("/order").Context);
     }
 
     [Test]

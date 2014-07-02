@@ -15,18 +15,18 @@ namespace RestBucks.Orders
   public class OrderResourceModule : NancyModule
   {
     private readonly IRepository<Order> orderRepository;
-    private readonly IRouteCacheProvider routeCacheProvider;
+    private readonly ResourceLinker linker;
 
     public static string Path = "/order";
     public static string SlashOrderId = "/{orderId}/";
     public static string PaymentPath = "/{orderId}/payment/";
     public static string ReceiptPath = "/{orderId}/receipt/";
 
-    public OrderResourceModule(IRepository<Order> orderRepository, IRouteCacheProvider routeCacheProvider) 
+    public OrderResourceModule(IRepository<Order> orderRepository, ResourceLinker linker) 
       : base(Path)
     {
       this.orderRepository = orderRepository;
-      this.routeCacheProvider = routeCacheProvider;
+      this.linker = linker;
 
       Get["ReadOrder", SlashOrderId] = parameters => GetHandler((int) parameters.orderId);
       Put["UpdateOrder", SlashOrderId] = parameters => Update((int)parameters.orderId, this.Bind<OrderRepresentation>());
@@ -47,15 +47,13 @@ namespace RestBucks.Orders
         return (Response) HttpStatusCode.NotFound;
 
       if (order.Status == OrderStatus.Canceled)
-        return Response.MovedTo(new ResourceLinker(Request.BaseUri()).BuildUriString(TrashModule.path,
-                                                                                TrashModule.GetCancelledPath,
-                                                                                new {orderId}));
+        return Response.MovedTo(linker.BuildUriString(Context, "ReadCancelledOrder", new {orderId}));
 
       if (Request.IsNotModified(order))
         return Response.NotModified();
 
       return Negotiate
-        .WithModel(OrderRepresentationMapper.Map(order, Request.BaseUri(), routeCacheProvider.GetCache()))
+        .WithModel(OrderRepresentationMapper.Map(order, linker, Context))
         .WithCacheHeaders(order);
     }
 

@@ -6,6 +6,7 @@
   using Orders.Representations;
   using Resources;
   using RestBucks.Infrastructure;
+  using RestBucks.Infrastructure.Linking;
   using SharpTestsEx;
 
   [TestFixture]
@@ -18,11 +19,11 @@
     public void SetUp()
     {
       var appHelper = new ResourceHandlerTestBase();
-      appHelper.CreateAppProxy();
+      var app = appHelper.CreateAppProxy();
 
       order = new Order();
       order.Cancel("You are too slow.");
-      representation = OrderRepresentationMapper.Map(order, "http://baseaddress/", appHelper.Container.Resolve<IRouteCache>());
+      representation = OrderRepresentationMapper.Map(order, appHelper.Container.Resolve<ResourceLinker>(), app.Get("/order").Context);
     }
 
     [Test]

@@ -37,13 +37,13 @@
     }
 
     [Test]
-    public void Base_uri_should_contain_bogus_if_host_is_not_provided()
+    public void Base_uri_should_contain_restbuckson_net_if_host_is_not_provided()
     {
       var request = new Request("method", new Url {HostName = "", Path = "path"});
 
       var baseUri = request.BaseUri();
 
-      Assert.That(baseUri, Is.StringContaining("http://bogus"));
+      Assert.That(baseUri, Is.StringContaining("http://restbuckson.net"));
     }
 
     [Test]
